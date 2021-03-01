@@ -6,6 +6,7 @@ import React from "react";
 import NavBar from "./components/nav-bar/NavBar";
 import Home from "./pages/home/Home";
 import StickyBox from "react-sticky-box";
+import Profile from "./pages/profile/Profile";
 
 function App(props) {
 	return (
@@ -17,9 +18,9 @@ function App(props) {
 				<Route path='/login' exact component={Login} />
 				<Route path='/signup' exact component={Signup} />
 				<Route path='/' exact component={Home} />
+				<Route path="/me" component={Profile} exact />
 			</Router>
 		</div>
 	);
 }
-
 export default App;
