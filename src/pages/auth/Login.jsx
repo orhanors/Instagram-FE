@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import isEmail from "validator/lib/isEmail";
 import equals from "validator/lib/equals";
 import isEmpty from "validator/lib/isEmpty";
@@ -8,7 +8,15 @@ import "./auth.scss";
 
 import logo_text from "../../assets/inst_logo_text.png";
 import { Row, Col } from "react-bootstrap";
+import { isAuthUser } from "../../helpers/auth";
 function Login(props) {
+	const history = useHistory();
+
+	useEffect(() => {
+		if (isAuthUser()) {
+			history.push("/");
+		}
+	}, []);
 	const [formData, setFormData] = useState({
 		username: "",
 		password: "",

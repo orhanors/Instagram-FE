@@ -7,6 +7,7 @@ import NavBar from "./components/nav-bar/NavBar";
 import Home from "./pages/home/Home";
 import StickyBox from "react-sticky-box";
 import Profile from "./pages/profile/Profile";
+import ProtectedRoute from "./customComponents/ProtectedRoute";
 
 function App(props) {
 	return (
@@ -17,8 +18,8 @@ function App(props) {
 				</StickyBox>
 				<Route path='/login' exact component={Login} />
 				<Route path='/signup' exact component={Signup} />
-				<Route path='/' exact component={Home} />
-				<Route path="/me" component={Profile} exact />
+				<ProtectedRoute path='/' exact component={Home} />
+				<ProtectedRoute path='/me' component={Profile} exact />
 			</Router>
 		</div>
 	);
