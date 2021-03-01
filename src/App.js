@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
-import NavBar from "./nav-bar/NavBar"
+import NavBar from "./components/nav-bar/NavBar"
 import Home from "./pages/home/Home"
 import StickyBox from "react-sticky-box"
 
