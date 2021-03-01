@@ -1,8 +1,19 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
+import NavBar from "./nav-bar/NavBar"
+import Home from "./pages/home/Home"
+import StickyBox from "react-sticky-box"
 
 function App(props) {
-	return <div>APP</div>;
+	return <div>
+		<StickyBox style={{zIndex: "99"}}>
+			<NavBar />
+
+		</StickyBox>
+		<div>
+			<Home />
+		</div>
+	</div>;
 }
 
 export default App;
