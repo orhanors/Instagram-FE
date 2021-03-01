@@ -1,0 +1,37 @@
+@import "../../../styles/colors.scss";
+.open-ids {
+	width: 236px;
+	margin: 0 auto;
+}
+
+.auth-provider {
+	font-family: system-ui, roboto, sans-serif;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 40px;
+	padding: 0 5px;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-bottom: 16px;
+	box-sizing: border-box;
+	border: 1px solid #d6d9dc;
+	text-align: center;
+	background: #fff;
+	color: #535a60;
+}
+
+.google-login {
+	color: #535a60;
+	border-color: #d6d9dc;
+}
+
+.facebook-login {
+	color: #fff;
+	background-color: $insta-blue;
+	border-color: transparent;
+}
+
+.svg-icon {
+	vertical-align: middle;
+	padding-bottom: 4px;
+}

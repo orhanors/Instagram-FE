@@ -1,0 +1,62 @@
+@import "../../styles/colors.scss";
+.auth-container {
+	.auth-box {
+		background-color: white;
+		margin-left: 32%;
+		margin-right: 32%;
+		margin-top: 5%;
+		padding-top: 2rem;
+		padding-bottom: 2rem;
+		padding-left: 4rem;
+		padding-right: 4rem;
+		border: 1px solid gray;
+		p {
+			font-size: 1.2rem;
+			font-weight: 600;
+			color: $text-gray;
+		}
+		small.terms {
+			color: $text-gray;
+		}
+		small.or {
+			color: $text-gray;
+			margin-top: 0.5rem;
+			font-weight: 600;
+		}
+		input {
+			background-color: $form-input-color;
+			border: 1px solid rgb(202, 202, 202);
+			font-size: 12px;
+			padding-left: 0.3rem;
+			padding-top: 0.3rem;
+			padding-bottom: 0.3rem;
+		}
+
+		hr {
+			border: 1px solid $text-gray;
+			border-radius: 2px;
+			width: 40%;
+		}
+
+		.submit-btn {
+			background-color: $insta-blue;
+			color: white;
+			font-size: 14px;
+			font-weight: 600;
+		}
+	}
+
+	.redirect-box {
+		background-color: white;
+		margin-left: 32%;
+		margin-right: 32%;
+		margin-top: 2%;
+		margin-bottom: 5%;
+		padding-top: 1.5rem;
+		padding-bottom: 1.5rem;
+		padding-left: 4rem;
+		padding-right: 4rem;
+		border: 1px solid gray;
+		font-weight: 400;
+	}
+}
