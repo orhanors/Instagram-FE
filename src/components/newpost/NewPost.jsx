@@ -7,6 +7,7 @@ export default function NewPost() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  console.log("show")
 
     return (
         <div className="mb-4 newpost-container p-2 py-3">
