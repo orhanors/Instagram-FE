@@ -3,7 +3,7 @@ import "./footer.scss";
 
 const Footer = () => {
   return (
-    <div class='container'>
+    <div className='container'>
       <div className="options">
         <a>About</a>
         <a>Vlog</a>

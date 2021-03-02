@@ -31,12 +31,12 @@ const PostsArea = () => {
       </Row>
 
       <Row className="imgs-container">
-          <PostCart />
-          <PostCart />
-          <PostCart />
-          <PostCart />
-          <PostCart />
-          <PostCart />
+          <PostCart img="http://placehold.it/50x50"/>
+          <PostCart img="http://placehold.it/50x50"/>
+          <PostCart img="http://placehold.it/50x50" />
+          <PostCart img="http://placehold.it/50x50" />
+          <PostCart img="http://placehold.it/50x50" />
+          <PostCart img="http://placehold.it/50x50" />
       </Row>
     </Container>
   );
