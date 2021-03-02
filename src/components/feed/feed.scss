@@ -1,11 +1,40 @@
-.container-feed{
-    width: 60%;
-    background-color:white;
-    padding: 1.5rem 0 1.5rem 0;
-    border: 1px solid rgb(219, 219, 219);
-    overflow: hidden;
-}
+// .container-feed{
+//     width: 100%;
+//     background-color:white;
+//     padding: 1.5rem 0 1.5rem 0;
+//     border: 1px solid rgb(219, 219, 219);
+// }
 
-.carousel{
-    background-color: red;
+// .carousel{
+//     background-color: red;
+// }
+
+// h3{
+//     width: 5rem;
+// }
+.slider{
+    width: 400px;
+    height: 200px;
+    overflow: hidden;
+    // display: flex;
+    // align-items: center;
+    border: 3px solid blue;
+    .slide-container{
+        width: 300%;//sliderwidth * number slides
+        height: 100%;
+        display:flex;
+        transition: margin-left 1s ease;
+        border: 1px solid green;
+        .slide{
+            width: calc(100% / 3);//sildercontainer width / * number slides
+            height: 100%;
+            border: 1px solid black;
+            display: flex;justify-content: center;
+            .story{
+                width: calc(100% / 3);
+                height: 100%;
+                border: 1px solid red;
+            }
+        }
+    }
 }

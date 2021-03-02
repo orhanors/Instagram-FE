@@ -1,0 +1,26 @@
+.newpost-container{
+    width: 100%;
+    background-color: white !important;
+    border: 1px solid rgb(219, 219, 219);
+}
+
+.newpost-button{
+    width: 100%;
+    background-color: transparent !important;
+    border-radius: 20px;
+}
+
+.post-description{
+    background-color:white;
+    border: none;
+    font-size: 16px;
+}
+
+.post-description:focus{
+    background-color:white;
+    border: none;
+    font-size: 16px;
+    outline: none;
+    box-shadow: none;
+}
+

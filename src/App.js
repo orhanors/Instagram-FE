@@ -18,7 +18,7 @@ function App(props) {
 				</StickyBox>
 				<Route path='/login' exact component={Login} />
 				<Route path='/signup' exact component={Signup} />
-				<ProtectedRoute path='/' exact component={Home} />
+				<Route path='/' exact component={Home} />
 				<ProtectedRoute path='/me' component={Profile} exact />
 			</Router>
 		</div>

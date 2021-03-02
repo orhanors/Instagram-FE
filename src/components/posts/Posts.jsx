@@ -7,9 +7,9 @@ export default function Posts() {
     <div>
       <div className="container-post mb-5">
         <div className="d-flex justify-content-between align-items-center mx-3 my-2">
-          <div className="header d-flex ">
+          <div className="header d-flex align-items-center">
             <img
-              className="post-header-img mr-3"
+              className="post-header-img mr-2"
               src="https://instagram.fcia2-2.fna.fbcdn.net/v/t51.2885-19/s150x150/130758943_435616994481384_911417875127205677_n.jpg?tp=1&_nc_ht=instagram.fcia2-2.fna.fbcdn.net&_nc_ohc=KDvv5Qe3FpgAX-7_01d&oh=8e97f6849129d9e8f759a955cb4bfaf8&oe=60681A73"
               alt=""
             />
