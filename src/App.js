@@ -10,6 +10,7 @@ import Profile from "./pages/profile/Profile";
 import ProtectedRoute from "./customComponents/ProtectedRoute";
 
 import backend from "./helpers/client";
+import Message from "./pages/message/Message";
 function App(props) {
 	const getSomething = async () => {
 		const response = await backend({ url: "/users/me" });
@@ -32,6 +33,7 @@ function App(props) {
 				<Route path='/login' exact component={Login} />
 				<Route path='/signup' exact component={Signup} />
 				<ProtectedRoute path='/' exact component={Home} />
+				<ProtectedRoute path='/message' exact component={Message} />
 				<ProtectedRoute path='/me' component={Profile} exact />
 			</Router>
 		</div>

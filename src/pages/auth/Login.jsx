@@ -10,7 +10,7 @@ import logo_text from "../../assets/inst_logo_text.png";
 import { Row, Col } from "react-bootstrap";
 import { isAuthUser } from "../../helpers/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../store/user";
+import { getUserProfile, login } from "../../store/user";
 function Login(props) {
 	const history = useHistory();
 	const dispatch = useDispatch();
@@ -45,6 +45,7 @@ function Login(props) {
 			dispatch(login(body));
 
 			setTimeout(() => {
+				dispatch(getUserProfile());
 				history.push("/");
 			}, 1000);
 		}
