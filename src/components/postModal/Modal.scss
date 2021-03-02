@@ -26,14 +26,15 @@
 .display-comment:hover{
     position: relative;
     left: 30px;
-    .comment-heart{
+    .comment-heart, .comment-delete{
         display: inline-block;
     }
 }
-.comment-heart{
+.comment-heart, .comment-delete{
     display: none;
     position: relative;
     right: -4rem;
+    font-size: 0.9rem;
 }
 .leave-comment{
     margin: 0px;

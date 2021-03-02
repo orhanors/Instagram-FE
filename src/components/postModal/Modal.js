@@ -6,6 +6,7 @@ import { Row, Col, FormControl } from "react-bootstrap";
 import "./Modal.scss";
 import "../post/Posts.jsx";
 import { AiOutlineHeart } from "react-icons/ai";
+import {TiDeleteOutline} from "react-icons/ti";
 
 const Background = styled.div`
   width: 100%;
@@ -130,6 +131,7 @@ export const Modal = ({ showModal, setShowModal }) => {
                             <strong>username</strong>
                             <span className="comment-content">💥💥💥💥</span>
                             <AiOutlineHeart className="comment-heart" />
+                            <TiDeleteOutline className="comment-delete" />
                           </p>
                           <hr />
                         </div>
