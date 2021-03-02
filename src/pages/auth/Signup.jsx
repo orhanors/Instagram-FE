@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import isEmail from "validator/lib/isEmail";
 import equals from "validator/lib/equals";
 import isEmpty from "validator/lib/isEmpty";
@@ -8,7 +8,13 @@ import "./auth.scss";
 
 import logo_text from "../../assets/inst_logo_text.png";
 import { Row, Col } from "react-bootstrap";
+import { isAuthUser } from "../../helpers/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { signup } from "../../store/user";
 function Signup(props) {
+	const dispatch = useDispatch();
+
+	const history = useHistory();
 	const [formData, setFormData] = useState({
 		email: "",
 		name: "",
@@ -17,11 +23,19 @@ function Signup(props) {
 		password: "",
 		password2: "",
 	});
-
+	useEffect(() => {
+		if (isAuthUser()) {
+			history.push("/");
+		}
+	}, []);
 	const [errorMsg, setErrorMsg] = useState("");
 	const [successMsg, setSuccessMsg] = useState("");
 	const { email, name, surname, username, password, password2 } = formData;
 
+	const handleFormChange = (e) => {
+		setFormData({ ...formData, [e.target.name]: e.target.value });
+		setErrorMsg("");
+	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -43,6 +57,7 @@ function Signup(props) {
 			let body = { username, name, surname, email, password };
 
 			//TODO handle Signup
+			dispatch(signup(body));
 		}
 	};
 
@@ -52,38 +67,57 @@ function Signup(props) {
 				<div className='row'>
 					<input
 						className='auth-input col-md-12 mb-3 '
+						name='name'
+						value={name}
+						onChange={handleFormChange}
 						type='text'
 						placeholder='Name'
 					/>
 					<input
 						className='auth-input col-md-12 mb-3 '
+						name='surname'
+						value={surname}
+						onChange={handleFormChange}
 						type='text'
 						placeholder='Surname'
 					/>
 					<input
 						className='auth-input col-md-12 mb-3 '
+						name='username'
+						value={username}
+						onChange={handleFormChange}
 						type='text'
 						placeholder='Username'
 					/>
 					<input
 						className='auth-input col-md-12 mb-3 '
+						name='email'
+						value={email}
+						onChange={handleFormChange}
 						type='text'
 						placeholder='Email'
 					/>
 					<input
 						className='auth-input col-md-12 mb-3 '
-						type='text'
+						name='password'
+						value={password}
+						onChange={handleFormChange}
+						type='password'
 						placeholder='Password'
 					/>
 					<input
 						className='auth-input col-md-12 mb-3 '
-						type='text'
+						name='password2'
+						value={password2}
+						onChange={handleFormChange}
+						type='password'
 						placeholder='Confirm Password'
 					/>
 
 					<input
 						className='auth-input submit-btn col-md-12 mb-3 '
 						type='submit'
+						onClick={handleSubmit}
 						placeholder='Confirm Password'
 					/>
 				</div>
@@ -120,7 +154,11 @@ function Signup(props) {
 						</div>
 					</Col>
 					<Col md={12}>{showSignupForm()}</Col>
-
+					<Col md={12}>
+						<div className='d-flex justify-content-center'>
+							<small style={{ color: "red" }}>{errorMsg}</small>
+						</div>
+					</Col>
 					<Col md={12}>
 						<small className='terms'>
 							By signing up, you agree to our{" "}
