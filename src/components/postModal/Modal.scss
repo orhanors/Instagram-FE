@@ -1,0 +1,66 @@
+.user-info{
+    position: relative;
+    top: 8px;
+    left: -80px !important;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+}
+.user-info img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+.user-info p{
+    font-size: 0.8rem;
+    padding-top: 4px;
+}
+.hr{
+    color: #444;
+}
+.display-comment{
+    position: relative;
+    left: 30px;
+}
+.display-comment:hover{
+    position: relative;
+    left: 30px;
+    .comment-heart, .comment-delete{
+        display: inline-block;
+    }
+}
+.comment-heart, .comment-delete{
+    display: none;
+    position: relative;
+    right: -4rem;
+    font-size: 0.9rem;
+}
+.leave-comment{
+    margin: 0px;
+    padding: 0px !important;
+    position: absolute;
+    left: -14px;
+    width: 95%;
+    padding-top: 8px !important;
+    bottom: 17px;
+    border-top: 1px solid #444;
+}
+.icons{
+    margin-left: 3px !important;
+    font-size: 0.5rem !important;
+    display: inline-block;
+}
+.comment-content{
+    padding-left: 5px;
+}
+.num-of-likes{
+    font-size: 0.8rem;
+    margin-left: 20px;
+    display: block !important;
+}
+.day-ago{
+    font-size: 0.8rem;
+    margin-left: 2rem;
+    display: block !important;
+}
