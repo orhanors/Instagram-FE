@@ -26,14 +26,14 @@ const ModalWrapper = styled.div`
   grid-template-columns: 1fr 1fr;
   position: relative;
   z-index: 10;
-  border-radius: 10px;
+  border-radius: 0px;
   z-index: 100;
 `;
 
 const ModalImg = styled.img`
   width: 100%;
   height: 100%;
-  border-radius: 10px 0 0 10px;
+  border-radius: 0px 0 0 0px;
   background: #000;
   z-index: 100;
 `;
@@ -82,15 +82,20 @@ export const Modal = ({ showModal, setShowModal }) => {
   });
 
   const closeModal = e => {
-    if (modalRef.current === e.target) {
-      setShowModal(false);
-    }
+    console.log("modalRef: ", modalRef)
+    // if (modalRef.current === e.target) {
+    //   setShowModal(false);
+    // }
   };
+
+  const keepModalOpened = e => {
+    setShowModal(true)
+  }
 
   const keyPress = useCallback(
     e => {
       if (e.key === 'Escape' && showModal) {
-        setShowModal(false);
+        //setShowModal(false);
         console.log('I pressed');
       }
     },
@@ -108,9 +113,9 @@ export const Modal = ({ showModal, setShowModal }) => {
   return (
     <>
       {showModal ? (
-        <Background onClick={closeModal} ref={modalRef}>
-          <animated.div style={animation}>
-            <ModalWrapper showModal={showModal}>
+        <Background ref={modalRef}>
+          <animated.div style={animation} >
+            <ModalWrapper showModal={showModal} >
               <ModalImg src="http://placehold.it/100x100" alt='camera' />
               <ModalContent>
                 <h1>Are you ready?</h1>
@@ -119,7 +124,6 @@ export const Modal = ({ showModal, setShowModal }) => {
               </ModalContent>
               <CloseModalButton
                 aria-label='Close modal'
-                onClick={() => setShowModal(prev => !prev)}
               />
             </ModalWrapper>
           </animated.div>

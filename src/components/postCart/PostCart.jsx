@@ -21,7 +21,7 @@ const PostCart = ({ img }) => {
   };
 
   return (
-    <Col className="cart" xs={12} md={6} lg={4} onClick={openModal}>
+    <Col className="cart" xs={12} md={6} lg={4} onClick={openModal} >
       <img src={img} id="myImg" />
       <Modal showModal={showModal} setShowModal={setShowModal} />
       <span className="overlay-icons" style={{ margin: "0 auto" }}>
