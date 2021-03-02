@@ -95,3 +95,28 @@
     width: 18rem;
     height: 19rem;
 }
+.following-btns{
+
+}
+.message-btn, .following, .sugested{
+  border: 1px solid #444;
+  padding: 0rem 0.7rem;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  background-color: #fafafa;
+  height: 30px;
+  margin-right: 1rem;
+}
+.follow-btns{
+
+}
+.follow-btn, .more{
+  border: 1px solid #0095F6;
+  padding: 0rem 0.7rem;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  background-color: #0095F6;
+  height: 30px;
+  margin-right: 1rem;
+  color: white;
+}
