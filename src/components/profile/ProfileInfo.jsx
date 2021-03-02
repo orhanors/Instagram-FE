@@ -7,10 +7,10 @@ const ProfileInfo = () => {
   return (
     <Container className="container">
       <Row>
-        <Col xs={3}>
+        <Col xs={11} md={3}>
           <img src="http://placehold.it/70x70" className="profile-img" />
         </Col>
-        <Col xs={8} mt-4>
+        <Col xs={11} md={8} mt-4>
           <Row className="firstRow">
             <p className="username">username</p>
             <button className="editProfie-btn">

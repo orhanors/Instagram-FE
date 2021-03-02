@@ -31,24 +31,12 @@ const PostsArea = () => {
       </Row>
 
       <Row className="imgs-container">
-        <Col className="post" lg={4}>
           <PostCart />
-        </Col>
-        <Col className="post" lg={4}>
           <PostCart />
-        </Col>
-        <Col className="post" lg={4}>
           <PostCart />
-        </Col>
-        <Col className="post" lg={4}>
           <PostCart />
-        </Col>
-        <Col className="post" lg={4}>
           <PostCart />
-        </Col>
-        <Col className="post" lg={4}>
           <PostCart />
-        </Col>
       </Row>
     </Container>
   );
