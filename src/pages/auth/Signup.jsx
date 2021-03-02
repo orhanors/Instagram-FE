@@ -28,6 +28,7 @@ function Signup(props) {
 			history.push("/");
 		}
 	}, []);
+
 	const [errorMsg, setErrorMsg] = useState("");
 	const [successMsg, setSuccessMsg] = useState("");
 	const { email, name, surname, username, password, password2 } = formData;
@@ -58,6 +59,9 @@ function Signup(props) {
 
 			//TODO handle Signup
 			dispatch(signup(body));
+			setTimeout(() => {
+				history.push("/");
+			}, 1000);
 		}
 	};
 

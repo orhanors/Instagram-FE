@@ -57,6 +57,16 @@ export const logout = () =>
 		onError: failed.type,
 	});
 
+export const login = (data) =>
+	apiCall({
+		url: `${process.env.REACT_APP_BE_URL}/auth/login`,
+		method: "post",
+		data,
+		onStart: requested.type,
+		onSuccess: loginSuccess.type,
+		onError: failed.type,
+	});
+
 export const signup = (data) =>
 	apiCall({
 		url: `${process.env.REACT_APP_BE_URL}/auth/signup`,

@@ -9,8 +9,12 @@ import "./auth.scss";
 import logo_text from "../../assets/inst_logo_text.png";
 import { Row, Col } from "react-bootstrap";
 import { isAuthUser } from "../../helpers/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../store/user";
 function Login(props) {
 	const history = useHistory();
+	const dispatch = useDispatch();
+	const { data } = useSelector((state) => state.user);
 
 	useEffect(() => {
 		if (isAuthUser()) {
@@ -22,8 +26,12 @@ function Login(props) {
 		password: "",
 	});
 
+	const handleFormChange = (e) => {
+		setFormData({ ...formData, [e.target.name]: e.target.value });
+		setErrorMsg("");
+	};
 	const [errorMsg, setErrorMsg] = useState("");
-	const [successMsg, setSuccessMsg] = useState("");
+
 	const { username, password } = formData;
 
 	const handleSubmit = async (e) => {
@@ -34,8 +42,11 @@ function Login(props) {
 		} else {
 			let { username, password } = formData;
 			let body = { username, password };
+			dispatch(login(body));
 
-			//TODO handle Signup
+			setTimeout(() => {
+				history.push("/");
+			}, 1000);
 		}
 	};
 
@@ -44,21 +55,27 @@ function Login(props) {
 			<div className='container'>
 				<div className='row'>
 					<input
+						onChange={handleFormChange}
+						value={username}
+						name='username'
 						className='auth-input col-md-12 mb-3 '
 						type='text'
 						placeholder='Username'
 					/>
 
 					<input
+						onChange={handleFormChange}
+						value={password}
+						name='password'
 						className='auth-input col-md-12 mb-3 '
-						type='text'
+						type='password'
 						placeholder='Password'
 					/>
 
 					<input
+						onClick={handleSubmit}
 						className='auth-input submit-btn col-md-12 mb-3 '
 						type='submit'
-						placeholder='Confirm Password'
 					/>
 				</div>
 			</div>

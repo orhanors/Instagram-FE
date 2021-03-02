@@ -9,7 +9,20 @@ import StickyBox from "react-sticky-box";
 import Profile from "./pages/profile/Profile";
 import ProtectedRoute from "./customComponents/ProtectedRoute";
 
+import backend from "./helpers/client";
 function App(props) {
+	const getSomething = async () => {
+		const response = await backend({ url: "/users/me" });
+
+		/**
+		 * post ex:
+		 * const response = await backend({ url: "/users/me",method:"post",data:postedData });
+
+		 */
+
+		console.log("APP response is: ", response.data);
+	};
+
 	return (
 		<div>
 			<Router>
