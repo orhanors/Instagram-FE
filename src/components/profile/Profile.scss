@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300&display=swap');
+
 .container {
   width: 70%;
   margin: 0 auto;
@@ -7,9 +9,9 @@
   margin: 0 auto;
   border-radius: 50%;
   vertical-align: middle;
-  width: 9rem;
-  height: 9rem;
-  margin: 1rem;
+  width: 8rem;
+  height: 8rem;
+  margin: 2.5rem 1rem 1rem 1rem;
   border: 1px solid #dbdbdb;
 }
 .firstRow {
@@ -19,8 +21,10 @@
   align-items: center;
 }
 .username {
-  font-size: 1.8rem;
+  font-size: 2rem;
   margin-right: 1rem;
+  font-family: 'Barlow', sans-serif;
+  padding-top: 0.9rem;
 }
 .editProfie-btn {
   border: 1px solid #444;
@@ -33,7 +37,10 @@
 }
 .settings-btn{
     color: #444;
-    font-size: 2rem;
+    font-size: 1.9rem;
+}
+.settings-btn:hover{
+  cursor: pointer;
 }
 .firstRow>p{
     margin-right: 1rem;
@@ -47,9 +54,37 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    font-size: 0.8rem;
 }
 .item{
-
+  padding: 5px;
+  display: inline;
+}
+.active-item{
+  display: inline;
+  padding: 5px;
+  color: black;
+}
+// .active-item::before{
+//   content: "";
+//   position: absolute;
+//   top: 41.5%;
+//   height: 1px;
+//   width: 5rem;
+//   left: 33%;
+//   background-color: #1b1b1b;
+//   z-index: 10;
+// }
+.active-item>p, .item>p{
+  display: inline;
+  padding-left: 7px;
+}
+.imgs-container{
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around !important;
 }
 .post{
     display: inline-block;
@@ -57,6 +92,6 @@
 }
 .post img{
     margin: 1rem;
-    width: 80px;
-    height: 100px;
+    width: 18rem;
+    height: 19rem;
 }

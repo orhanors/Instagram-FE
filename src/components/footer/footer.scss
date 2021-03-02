@@ -1,0 +1,14 @@
+.container{
+    margin-bottom: 25px;
+}
+.options{
+    color: rgb(133, 133, 133);
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.options>a{
+    padding: 1px 6px;
+}
