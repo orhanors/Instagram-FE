@@ -68,7 +68,7 @@ const CloseModalButton = styled(MdClose)`
   z-index: 100;
 `;
 
-export const Modal = ({ showModal, setShowModal }) => {
+export const Modal = ({ showModal, setShowModal,data }) => {
   const modalRef = useRef();
 
   let[newShow, setNewShow] = useState(true);
@@ -132,7 +132,7 @@ export const Modal = ({ showModal, setShowModal }) => {
             <ModalWrapper showModal={showModal}>
               <Row>
                 <Col xs={8}>
-                  <ModalImg src="http://placehold.it/100x100" alt="camera" />
+                  <ModalImg src={data.image} alt="camera" />
                 </Col>
                 <Col xs={4}>
                   <ModalContent>
@@ -140,20 +140,41 @@ export const Modal = ({ showModal, setShowModal }) => {
                       <div className="user-info">
                         <img src="http://placehold.it/100x100" />
                         <p>
-                          <strong>username</strong>
+                          <strong>{data.user.username}</strong>
                         </p>
+                      
                       </div>
+                      {data.description &&
+                       <div className="user-info ml-5">
+                       <img src={data.user.image} />
+                       
+                       <p>
+                         <strong>{data.user.username}</strong>
+                         <span className="comment-content">{data.description}</span>
+                        
+                       </p>
+                       <hr />
+                     </div>
+                      }
+                      
+                     
                       <div className="display-comment">
-                        <div className="user-info">
-                          <img src="http://placehold.it/100x100" />
-                          <p>
-                            <strong>username</strong>
-                            <span className="comment-content">💥💥💥💥💥💥💥💥💥💥💥💥💥💥</span>
-                            <AiOutlineHeart className="comment-heart" />
-                            <TiDeleteOutline className="comment-delete" />
-                          </p>
-                          <hr />
-                        </div>
+                      {data && data.comments.map((comment)=>{
+                            return(
+                              <div className="user-info">
+                              <img src={data.user.image} />
+                              
+                              <p>
+                                <strong>{comment.user.username}</strong>
+                                <span className="comment-content">{comment.content}</span>
+                                <AiOutlineHeart className="comment-heart" />
+                                <TiDeleteOutline className="comment-delete" />
+                              </p>
+                              <hr />
+                            </div>
+                            )
+                          })}
+                      
                       </div>
                       <hr />
                       <div className="leave-comment">
@@ -209,7 +230,7 @@ export const Modal = ({ showModal, setShowModal }) => {
                           </Row>
                           <Row>
                             <p className="num-of-likes">
-                              <strong>35 likes</strong>
+                              <strong>{data.likes.length} likes</strong>
                             </p>
                             <p className="day-ago">5 days ago</p>
                           </Row>
