@@ -22,7 +22,6 @@ createAuthRefreshInterceptor(axios, refreshAuthLogic);
 
 // 🚀 MIDDLEWARE
 const api = ({ dispatch }) => (next) => async (action) => {
-	console.log("action is: ", action);
 	if (action.type !== actions.apiCall.type) {
 		//if action is not for api call,go to the next step
 		return next(action);

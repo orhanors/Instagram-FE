@@ -1,7 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./message.scss";
 import { Container, Row, Col, FormControl } from "react-bootstrap";
+import io from "socket.io-client";
+import { useSelector } from "react-redux";
+const connOpt = {
+	transports: ["websocket"], // socket connectin options
+};
+let socket = io("http://localhost:3001", connOpt);
 function Message(props) {
+	const currentUser = useSelector((state) => state.user.data);
+
+	const [message, setMessage] = useState("");
+	const [messages, setMessages] = useState([]);
+	const [chatList, setChatList] = useState([]);
+	const [receiver, setReceiver] = useState("");
+	const setInitialChatList = () => {
+		const userNames = [];
+
+		for (let follower of currentUser.followers) {
+			userNames.push(follower.username);
+		}
+		setChatList(userNames);
+	};
+	useEffect(() => {
+		socket.on("connect", () => console.log("connected to socket")); //check if socket is connected
+		if (currentUser.followers) {
+			setInitialChatList();
+		}
+		return () => socket.removeAllListeners(); //componentWillUnmount
+	}, [currentUser]);
+
+	const handleMessage = (e) => {
+		if (e.keyCode === 13) {
+			console.log("pressed enter");
+			socket.emit("sendMessage", message);
+
+			socket.on("message", (data) => {
+				console.log("message_received data: ", data);
+				const newMessages = [...messages];
+				newMessages.push(data);
+				setMessages(newMessages);
+			});
+			setMessage("");
+		} else {
+			setMessage(e.target.value);
+		}
+	};
+	const startConversation = (e) => {
+		socket.emit("leaveRoom", currentUser.username + "@" + receiver);
+		setReceiver(e.target.id);
+
+		if (e.target.id === receiver) {
+			const roomName = currentUser.username + "@" + receiver;
+			socket.emit("join", roomName);
+		}
+	};
 	return (
 		<div className='message-container'>
 			<Container>
@@ -9,17 +62,30 @@ function Message(props) {
 					<Col md={4}>
 						<Row>
 							<Col md={12}>
-								<div className='message-info'></div>
+								<div className='message-info'>
+									<div>
+										<h4 className='text-center'>
+											{currentUser.username}
+										</h4>
+										<div></div>
+									</div>
+								</div>
 							</Col>
 							<Col md={12}>
 								<div className='message-people'>
-									Lorem ipsum, dolor sit amet consectetur
-									adipisicing elit. Necessitatibus, saepe
-									maiores adipisci accusantium corporis
-									exercitationem, soluta ea id nisi at minima
-									aspernatur iusto tempora! Quidem similique
-									quod non sit consectetur. Lorem ipsum, dolor
-									sit amet consectetur adipisicing elit.
+									{chatList.map((user) => {
+										return (
+											<li
+												key={user}
+												id={user}
+												onClick={startConversation}>
+												{user}
+											</li>
+										);
+									})}
+									<li id='enith' onClick={startConversation}>
+										enith
+									</li>
 								</div>
 							</Col>
 						</Row>
@@ -29,69 +95,9 @@ function Message(props) {
 						<Row>
 							<Col md={12}>
 								<div className='message-box'>
-									Lorem ipsum, dolor sit amet consectetur
-									adipisicing elit. Necessitatibus, saepe
-									maiores adipisci accusantium corporis
-									exercitationem, soluta ea id nisi at minima
-									aspernatur iusto tempora! Quidem similique
-									quod non sit consectetur. Lorem ipsum, dolor
-									sit amet consectetur adipisicing elit. Lorem
-									ipsum, dolor sit amet consectetur
-									adipisicing elit. Necessitatibus, saepe
-									maiores adipisci accusantium corporis
-									exercitationem, soluta ea id nisi at minima
-									aspernatur iusto tempora! Quidem similique
-									quod non sit consectetur. Lorem ipsum, dolor
-									sit amet consectetur adipisicing elit. Lorem
-									ipsum, dolor sit amet consectetur
-									adipisicing elit. Necessitatibus, saepe
-									maiores adipisci accusantium corporis
-									exercitationem, soluta ea id nisi at minima
-									aspernatur iusto tempora! Quidem similique
-									quod non sit consectetur. Lorem ipsum, dolor
-									sit amet consectetur adipisicing elit. Lorem
-									ipsum, dolor sit amet consectetur
-									adipisicing elit. Necessitatibus, saepe
-									maiores adipisci accusantium corporis
-									exercitationem, soluta ea id nisi at minima
-									aspernatur iusto tempora! Quidem similique
-									quod non sit consectetur. Lorem ipsum, dolor
-									sit amet consectetur adipisicing elit. Lorem
-									ipsum, dolor sit amet consectetur
-									adipisicing elit. Necessitatibus, saepe
-									maiores adipisci accusantium corporis
-									exercitationem, soluta ea id nisi at minima
-									aspernatur iusto tempora! Quidem similique
-									quod non sit consectetur. Lorem ipsum, dolor
-									sit amet consectetur adipisicing elit. Lorem
-									ipsum, dolor sit amet consectetur
-									adipisicing elit. Necessitatibus, saepe
-									maiores adipisci accusantium corporis
-									exercitationem, soluta ea id nisi at minima
-									aspernatur iusto tempora! Quidem similique
-									quod non sit consectetur. Lorem ipsum, dolor
-									sit amet consectetur adipisicing elit. Lorem
-									ipsum, dolor sit amet consectetur
-									adipisicing elit. Necessitatibus, saepe
-									maiores adipisci accusantium corporis
-									exercitationem, soluta ea id nisi at minima
-									aspernatur iusto tempora! Quidem similique
-									quod non sit consectetur. Lorem ipsum, dolor
-									sit amet consectetur adipisicing elit. Lorem
-									ipsum, dolor sit amet consectetur
-									adipisicing elit. Necessitatibus, saepe
-									maiores adipisci accusantium corporis
-									exercitationem, soluta ea id nisi at minima
-									aspernatur iusto tempora! Quidem similique
-									quod non sit consectetur. Lorem ipsum, dolor
-									sit amet consectetur adipisicing elit. Lorem
-									ipsum, dolor sit amet consectetur
-									adipisicing elit. Necessitatibus, saepe
-									maiores adipisci accusantium corporis
-									exercitationem, soluta ea id nisi at minima
-									aspernatur iusto tempora! Quidem similique
-									quod non sit consectetur. Lorem ipsum, dolor
-									sit amet consectetur adipisicing elit.
+									{messages.map((message) => {
+										return <p>{message}</p>;
+									})}
 								</div>
 							</Col>
 							<Col md={12}>
@@ -109,6 +115,9 @@ function Message(props) {
 
 									<input
 										type='text'
+										value={message}
+										onChange={handleMessage}
+										onKeyDown={handleMessage}
 										className='message-input'
 										placeholder='Message...'
 									/>
