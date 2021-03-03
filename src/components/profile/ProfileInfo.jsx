@@ -1,14 +1,20 @@
 import React, { useState } from "react";
+import {useSelector} from 'react-redux';
 import { Container, Row, Col } from "react-bootstrap";
 import "./Profile.scss";
 import { IoIosSettings } from "react-icons/io";
 import { FaUserCheck } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { HiDotsHorizontal } from 'react-icons/hi'
+import { HiDotsHorizontal } from 'react-icons/hi';
+import backend from "../../helpers/client";
 
-const ProfileInfo = () => {
+const ProfileInfo = (props) => {
+
   let [me, setMe] = useState(false);
   let [following, setFollowing] = useState(false);
+
+  const currentUser = useSelector((state) => state.user.data);
+  //console.log('current user: ',currentUser)
 
   return (
     <Container className="container">
