@@ -1,0 +1,33 @@
+.res-container{
+    padding: 2px;
+    margin-top: 0px;
+}
+.img{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-top: 7px;
+    margin-left: 15px;
+}
+.text{
+    margin-left: 60%;
+    position:relative;
+    margin-top: -50px !important;
+    left: 20px;
+}
+.h6{
+    color: #444;
+    font-size: 1.1rem;
+    position: relative;
+}
+.p {
+    color: rgb(134, 134, 134);
+    font-size: 1rem;
+}
+.results-container{
+    width: 20rem;
+    max-height: 10rem;
+    position: relative;
+    left: -5rem;
+    margin-top: 5px;
+}

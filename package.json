@@ -10,6 +10,7 @@
     "axios": "^0.21.1",
     "axios-auth-refresh": "^3.1.0",
     "bootstrap": "^4.6.0",
+    "downshift": "^6.1.0",
     "js-cookie": "^2.2.1",
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
