@@ -2,6 +2,7 @@ import React from "react";
 import "./navBar.scss";
 import { withRouter } from "react-router-dom";
 import { InputGroup, FormControl } from "react-bootstrap";
+import Search from '../search/Search';
 
 function NavBar(props) {
 	const showNavBar = () => {
@@ -21,6 +22,7 @@ function NavBar(props) {
 								placeholder='Search'
 								className='search'
 							/>
+							<Search/>
 						</InputGroup>
 					</div>
 					<div className='d-flex'>
