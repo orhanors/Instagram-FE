@@ -1,8 +1,10 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import "./posts.scss";
 import { FormControl, Button } from "react-bootstrap";
 
 export default function Posts() {
+
+ 
   return (
     <div>
       <div className="container-post mb-5">
