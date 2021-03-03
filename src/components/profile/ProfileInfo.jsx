@@ -7,24 +7,54 @@ import { FaUserCheck } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { HiDotsHorizontal } from 'react-icons/hi';
 import backend from "../../helpers/client";
+import {withRouter} from 'react-router-dom';
+import { useEffect } from "react";
 
 const ProfileInfo = (props) => {
 
   let [me, setMe] = useState(false);
   let [following, setFollowing] = useState(false);
+  let [users, setUsers] = useState([]);
+  let [currentUser, setCurrentUser] = useState(null);
+  let [noOfPosts, setNoOfPosts] = useState(0);
 
-  const currentUser = useSelector((state) => state.user.data);
+  const loggedInUser = useSelector((state) => state.user.data);
   //console.log('current user: ',currentUser)
+
+  useEffect(()=>{
+    console.log('the user the we choose is: ', props.match.params.user)
+    getUsers();
+  }, [])
+
+  useEffect(()=>
+  getCurrentUser(), [users])
+
+  useEffect(()=>setCurrentUser(getCurrentUser), [props.match.params.user])
+
+  const getUsers = async () => {
+    const response = await backend({ url: "/users/" });
+
+    console.log("users: ", response.data);
+    setUsers(response.data);
+  };
+
+  const getCurrentUser = async () => {
+		let result = users.filter(user => user.username == props.match.params.user)
+      console.log('filtered result: ', result)
+      setCurrentUser(result);
+      return result;
+	};
 
   return (
     <Container className="container">
+    {currentUser && 
       <Row>
         <Col xs={11} md={3}>
-          <img src="http://placehold.it/70x70" className="profile-img" />
+          <img src={currentUser[0] && currentUser[0].image} className="profile-img" />
         </Col>
         <Col xs={11} md={8} mt-4>
           <Row className="firstRow">
-            <p className="username">username</p>
+            <p className="username">{currentUser[0] && currentUser[0].username}</p>
             {me && (
               <>
                 <button className="editProfie-btn">
@@ -68,13 +98,13 @@ const ProfileInfo = (props) => {
           </Row>
           <Row className="firstRow">
             <p>
-              <strong>name</strong>
+              <strong>{currentUser[0] && currentUser[0].name}</strong>
             </p>
           </Row>
         </Col>
-      </Row>
+      </Row>}
     </Container>
   );
 };
 
-export default ProfileInfo;
+export default withRouter(ProfileInfo);

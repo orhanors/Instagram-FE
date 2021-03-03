@@ -80,7 +80,7 @@ const Search = () => {
                   >
                     {item && (
                       <Row className="pr-2 pl-2">
-                        <Link to={`/albumPage/${item.username}`}>
+                        <Link to={`/${item.username}`}>
                           {/*<p
                             style={{
                               color: "black",
