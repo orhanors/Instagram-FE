@@ -5,6 +5,9 @@ import { BsMusicNote } from "react-icons/bs";
 import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import backend from "../../helpers/client";
+import "../nav-bar/navBar.scss"
+import SearchResult from "./SearchResult";
+import './SearchResult.scss';
 
 const Search = () => {
   let [users, setUsers] = useState([]);
@@ -13,7 +16,6 @@ const Search = () => {
 
   const downshiftOnChange = (selectedUser) => {
     // alert(`you have selected ${selectedUser.name} ${selectedUser.surname}`);
-    alert(selectedUser);
   };
 
   const getUsers = async () => {
@@ -56,9 +58,9 @@ const Search = () => {
           <br />
           <input
             type="text"
-            className="searchInput"
+            className="search"
             {...getInputProps({
-              placeholder: "Search",
+              placeholder:  "Search",
               onChange: setSearchValue(inputValue),
             })}
           />
@@ -74,11 +76,12 @@ const Search = () => {
                         highlightedIndex === index ? "lightgray" : "white",
                       fontWeight: selectedItem === item ? "bold" : "normal",
                     }}
+                    className='results-container'
                   >
                     {item && (
                       <Row className="pr-2 pl-2">
                         <Link to={`/albumPage/${item.username}`}>
-                          <p
+                          {/*<p
                             style={{
                               color: "black",
                               padding: "5px 10px",
@@ -86,14 +89,9 @@ const Search = () => {
                               marginBottom: "0px",
                             }}
                           >
-                            <BsMusicNote
-                              style={{
-                                marginLeft: "10px",
-                                marginRight: "5px",
-                              }}
-                            />
                             {item.username}
-                          </p>
+                        </p>*/}
+                            <SearchResult image={item.image} username={item.username} name={item.name} surname={item.surname} />
                         </Link>
                       </Row>
                     )}
