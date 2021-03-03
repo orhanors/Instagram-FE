@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useRef, useEffect, useCallback, useState } from "react";
 import { useSpring, animated } from "react-spring";
 import styled from "styled-components";
 import { MdClose } from "react-icons/md";
@@ -71,6 +71,8 @@ const CloseModalButton = styled(MdClose)`
 export const Modal = ({ showModal, setShowModal }) => {
   const modalRef = useRef();
 
+  let[newShow, setNewShow] = useState(true);
+
   const animation = useSpring({
     config: {
       duration: 250,
@@ -80,21 +82,38 @@ export const Modal = ({ showModal, setShowModal }) => {
   });
 
   const closeModal = (e) => {
-    console.log("modalRef: ", modalRef);
-    // if (modalRef.current === e.target) {
-    //   setShowModal(false);
-    // }
-  };
+      setNewShow(false);
+      setShowModal(false);
+      if (modalRef.current === e.target) {
+        setNewShow(false);
+        setShowModal(false);
+      }
+    };
 
-  const keepModalOpened = (e) => {
-    setShowModal(true);
-  };
+  // const closeModal = (e) => {
+  //   setShowModal(false);
+  //   if (modalRef.current === e.target) {
+  //     setShowModal(false);
+  //   }
+  // };
+
+  // const closeModal = useCallback(
+  //   (e) => {
+  //     setShowModal(false);
+  //     console.log('show from closeModal: ', showModal);
+  //   }, [setShowModal, showModal]
+  // );
+
+  // useEffect(() => {
+  //   document.addEventListener("click", closeModal);
+  //   return () => document.removeEventListener("click", closeModal);
+  // }, [closeModal]);
 
   const keyPress = useCallback(
     (e) => {
       if (e.key === "Escape" && showModal) {
-        //setShowModal(false);
-        console.log("I pressed");
+        setShowModal(false);
+        console.log("keyboard event is: ", e);
       }
     },
     [setShowModal, showModal]
@@ -107,7 +126,7 @@ export const Modal = ({ showModal, setShowModal }) => {
 
   return (
     <>
-      {showModal ? (
+      {(showModal && newShow) ? (
         <Background ref={modalRef}>
           <animated.div style={animation}>
             <ModalWrapper showModal={showModal}>
@@ -129,7 +148,7 @@ export const Modal = ({ showModal, setShowModal }) => {
                           <img src="http://placehold.it/100x100" />
                           <p>
                             <strong>username</strong>
-                            <span className="comment-content">💥💥💥💥</span>
+                            <span className="comment-content">💥💥💥💥💥💥💥💥💥💥💥💥💥💥</span>
                             <AiOutlineHeart className="comment-heart" />
                             <TiDeleteOutline className="comment-delete" />
                           </p>
@@ -220,7 +239,7 @@ export const Modal = ({ showModal, setShowModal }) => {
                       </div>
                     </>
                   </ModalContent>
-                  <CloseModalButton aria-label="Close modal" />
+                  <CloseModalButton aria-label="Close modal" onClick={closeModal}/>
                 </Col>
               </Row>
             </ModalWrapper>
