@@ -21,20 +21,19 @@
 }
 .display-comment{
     position: relative;
-    left: 30px;
+    left: 45px;
 }
-.display-comment:hover{
-    position: relative;
-    left: 30px;
-    .comment-heart, .comment-delete{
-        display: inline-block;
-    }
+.comment-heart{
+    position: absolute;
+    right: -10px;
+    top: 17px;
+    font-size: 1rem;
 }
-.comment-heart, .comment-delete{
-    display: none;
-    position: relative;
-    right: -4rem;
-    font-size: 0.9rem;
+.comment-delete{
+    position: absolute;
+    right: -25px;
+    top: 17px;
+    font-size: 1rem;
 }
 .leave-comment{
     margin: 0px;

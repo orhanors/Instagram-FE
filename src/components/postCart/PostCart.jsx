@@ -17,7 +17,8 @@ const PostCart = ({ img }) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
-    setShowModal((prev) => !prev);
+    //setShowModal((prev) => !prev);
+    setShowModal(true)
   };
 
   return (
