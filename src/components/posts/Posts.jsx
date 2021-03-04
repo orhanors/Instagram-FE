@@ -1,15 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
 import "./posts.scss";
 import { FormControl, Button } from "react-bootstrap";
 
 export default function Posts() {
+  const [marginLeft, setMarginLeft] = useState(0);
+
+
   return (
     <div>
       <div className="container-post mb-5">
         <div className="d-flex justify-content-between align-items-center mx-3 my-2">
-          <div className="header d-flex ">
+          <div className="header d-flex align-items-center">
             <img
-              className="post-header-img mr-3"
+              className="post-header-img mr-2"
               src="https://instagram.fcia2-2.fna.fbcdn.net/v/t51.2885-19/s150x150/130758943_435616994481384_911417875127205677_n.jpg?tp=1&_nc_ht=instagram.fcia2-2.fna.fbcdn.net&_nc_ohc=KDvv5Qe3FpgAX-7_01d&oh=8e97f6849129d9e8f759a955cb4bfaf8&oe=60681A73"
               alt=""
             />
@@ -51,11 +54,50 @@ export default function Posts() {
             </svg>
           </button>
         </div>
+        <div className="slider mb-4 py-2">
+          <button
+            className="stories-prev-post"
+            onClick={() => setMarginLeft(marginLeft + 100)}
+            style={marginLeft===0 ?{visibility: 'hidden'} :{visibility: 'visible'}}
+          >
+            <i class="fas fa-chevron-circle-left myPostIc"></i>
+          </button>
+          <button
+            className="stories-next-post"
+            onClick={() => setMarginLeft(marginLeft - 100)}
+            style={marginLeft===-200 ?{visibility: 'hidden'} :{visibility: 'visible'}}
+          >
+            <i class="fas fa-chevron-circle-right myPostIc"></i>
+          </button>
+          <div
+            className="slide-container"
+            style={{ width: "300%", marginLeft: `${marginLeft}%` }}
+          >
+            <div className="slide mr">
         <img
           className="post-img"
-          src="https://instagram.fcia2-2.fna.fbcdn.net/v/t51.2885-15/fr/e15/p1080x1080/154808314_1111836235959671_5152775189636699032_n.jpg?tp=1&_nc_ht=instagram.fcia2-2.fna.fbcdn.net&_nc_cat=1&_nc_ohc=CVuwr4V6O2QAX-iogi6&oh=37bdb96a44eea0206b98effe374bc2b9&oe=60683CD1"
+          src="https://instagram.fcia2-2.fna.fbcdn.net/v/t51.2885-15/sh0.08/e35/p640x640/155189728_125918319446176_3850474231685097554_n.jpg?tp=1&_nc_ht=instagram.fcia2-2.fna.fbcdn.net&_nc_cat=1&_nc_ohc=yWmJ5NFlIowAX_NjYfm&oh=c2b6a1e5d43056456ca56f71af6beb81&oe=60656727"
           alt=""
         />
+
+            </div>
+            <div className="slide mr">
+            <img
+          className="post-img"
+          src="https://instagram.fcia2-2.fna.fbcdn.net/v/t51.2885-15/sh0.08/e35/p750x750/155229182_795001917768683_8463933407320629738_n.jpg?tp=1&_nc_ht=instagram.fcia2-2.fna.fbcdn.net&_nc_cat=1&_nc_ohc=YqriNHZxF48AX-fVAw5&oh=2dc45dc75db5b5386e2111c4ec636949&oe=606790A3"
+          alt=""
+        />
+            </div>
+            <div className="slide mr">
+            <img
+          className="post-img"
+          src="https://instagram.fcia2-2.fna.fbcdn.net/v/t51.2885-15/sh0.08/e35/p750x750/155361006_424355331972805_7204783144745699031_n.jpg?tp=1&_nc_ht=instagram.fcia2-2.fna.fbcdn.net&_nc_cat=1&_nc_ohc=-AIc_gcIDLUAX98Opj2&oh=6afcf0f86692befad13a45f7368ce610&oe=60668880"
+          alt=""
+        />
+
+            </div>
+          </div>
+        </div>
         <div className="d-flex justify-content-between px-3 py-3">
           <div className="d-flex">
             <svg
@@ -105,13 +147,21 @@ export default function Posts() {
           </svg>
         </div>
         <div className="footer d-flex align-items-center justify-content-between px-3 pb-2">
-            <div className="d-flex align-items-center">
-                <svg aria-label="Emoji" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M24 48C10.8 48 0 37.2 0 24S10.8 0 24 0s24 10.8 24 24-10.8 24-24 24zm0-45C12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21S35.6 3 24 3z"></path><path d="M34.9 24c0-1.4-1.1-2.5-2.5-2.5s-2.5 1.1-2.5 2.5 1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5zm-21.8 0c0-1.4 1.1-2.5 2.5-2.5s2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5-2.5-1.1-2.5-2.5zM24 37.3c-5.2 0-8-3.5-8.2-3.7-.5-.6-.4-1.6.2-2.1.6-.5 1.6-.4 2.1.2.1.1 2.1 2.5 5.8 2.5 3.7 0 5.8-2.5 5.8-2.5.5-.6 1.5-.7 2.1-.2.6.5.7 1.5.2 2.1 0 .2-2.8 3.7-8 3.7z"></path></svg>
-                <FormControl placeholder="Add a comment" className="comment" />
-            </div>
-            <button className="comment-button">
-                Post
-            </button>
+          <div className="d-flex align-items-center">
+            <svg
+              aria-label="Emoji"
+              class="_8-yf5 "
+              fill="#262626"
+              height="24"
+              viewBox="0 0 48 48"
+              width="24"
+            >
+              <path d="M24 48C10.8 48 0 37.2 0 24S10.8 0 24 0s24 10.8 24 24-10.8 24-24 24zm0-45C12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21S35.6 3 24 3z"></path>
+              <path d="M34.9 24c0-1.4-1.1-2.5-2.5-2.5s-2.5 1.1-2.5 2.5 1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5zm-21.8 0c0-1.4 1.1-2.5 2.5-2.5s2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5-2.5-1.1-2.5-2.5zM24 37.3c-5.2 0-8-3.5-8.2-3.7-.5-.6-.4-1.6.2-2.1.6-.5 1.6-.4 2.1.2.1.1 2.1 2.5 5.8 2.5 3.7 0 5.8-2.5 5.8-2.5.5-.6 1.5-.7 2.1-.2.6.5.7 1.5.2 2.1 0 .2-2.8 3.7-8 3.7z"></path>
+            </svg>
+            <FormControl placeholder="Add a comment" className="comment" />
+          </div>
+          <button className="comment-button">Post</button>
         </div>
       </div>
     </div>
