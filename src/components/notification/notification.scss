@@ -1,0 +1,27 @@
+.notification-container {
+	position: fixed;
+	background-color: white;
+	width: 30vw;
+	height: 30vh;
+	top: 12vh;
+	left: 65vw;
+	overflow-y: scroll;
+	border-radius: 8px;
+
+	.notifications {
+		margin-top: 5%;
+		ul {
+			list-style-type: none;
+			padding-left: 0;
+			li {
+				padding-left: 1rem;
+				padding-top: 1rem;
+				padding-bottom: 1rem;
+				&:hover {
+					cursor: pointer;
+					background-color: rgb(226, 226, 226);
+				}
+			}
+		}
+	}
+}
