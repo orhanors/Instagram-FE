@@ -4,16 +4,19 @@ import { FormControl, Button } from "react-bootstrap";
 import {getNewsFeedPosts} from "../../api/posts"
 import {addComment} from "../../api/comments"
 import {Modal } from "../postModal/Modal"
+import Comments from "../comments/Comments"
 export default function Posts() {
   const [showModal, setShowModal] = useState(false);
-  const [comment,setComment] = useState("")
+  const [content,setContent] = useState("")
   const openModal = () => {
     //setShowModal((prev) => !prev);
     setShowModal(true)
   };
   const addNewComment = async(postId)=>{
     try {
-      const res = await addComment(postId)
+      const res = await addComment(postId,content)
+      console.log(res)
+      console.log(JSON.stringify(content))
     } catch (error) {
       console.log(error)
     }
@@ -24,7 +27,10 @@ export default function Posts() {
 		setData(res)
     console.log("-0----",res)
     console.log(data.length)
-	},[data.length])
+	},[showModal])
+  const [marginLeft, setMarginLeft] = useState(0);
+
+
   return (
     
     <div>
@@ -35,11 +41,11 @@ export default function Posts() {
             <div className="header d-flex ">
               <img
                 className="post-header-img mr-3"
-                src={post.user.image}
+                src={post?.user?.image}
                 alt=""
               />
               <div className="d-flex flex-column">
-                <h6>{post.user.username}</h6>
+                <h6>{post?.user?.username}</h6>
                 <small>Bramall Lane</small>
               </div>
             </div>
@@ -132,18 +138,23 @@ export default function Posts() {
             </svg>
           </div>
           {post.comments.length>0 &&
-         <span>
+           <span>
             <p onClick={openModal}>View all {post.comments.length} comments</p>
             <Modal showModal={showModal} setShowModal={setShowModal} data={post}/>
+            
             </span>
+            
          
           }
+           {post.comments.length>0 && 
+           <Comments comment={post.comments}/>
+      }
           <div className="footer d-flex align-items-center justify-content-between px-3 pb-2">
               <div className="d-flex align-items-center">
                   <svg aria-label="Emoji" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M24 48C10.8 48 0 37.2 0 24S10.8 0 24 0s24 10.8 24 24-10.8 24-24 24zm0-45C12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21S35.6 3 24 3z"></path><path d="M34.9 24c0-1.4-1.1-2.5-2.5-2.5s-2.5 1.1-2.5 2.5 1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5zm-21.8 0c0-1.4 1.1-2.5 2.5-2.5s2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5-2.5-1.1-2.5-2.5zM24 37.3c-5.2 0-8-3.5-8.2-3.7-.5-.6-.4-1.6.2-2.1.6-.5 1.6-.4 2.1.2.1.1 2.1 2.5 5.8 2.5 3.7 0 5.8-2.5 5.8-2.5.5-.6 1.5-.7 2.1-.2.6.5.7 1.5.2 2.1 0 .2-2.8 3.7-8 3.7z"></path></svg>
-                  <FormControl placeholder="Add a comment" className="comment" />
+                  <FormControl placeholder="Add a comment" className="comment" onChange={(e)=>setContent(e.target.value)} />
               </div>
-              <button className="comment-button">
+              <button className="comment-button" onClick={()=>addNewComment(post._id)}>
                   Post
               </button>
           </div>

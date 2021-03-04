@@ -4,8 +4,8 @@ import "./sideBar.scss";
 export default function () {
   return (
     <div className="profile-container p-2">
-      <div className="d-flex justify-content-between align-items-center">
-        <div className="profile d-flex">
+      <div className="d-flex justify-content-between ">
+        <div className="profile d-flex align-items-center">
             <img
                 className="profile-home-img"
                 src="https://instagram.fcia2-2.fna.fbcdn.net/v/t51.2885-19/s320x320/30842002_1814516855516556_7247540549295538176_n.jpg?tp=1&_nc_ht=instagram.fcia2-2.fna.fbcdn.net&_nc_ohc=tCD2dBQRqYEAX8qne7N&oh=b34921dfa483655a8cb368c06bb49dd1&oe=606619BA"
