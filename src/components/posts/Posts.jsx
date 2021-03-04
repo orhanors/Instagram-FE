@@ -6,7 +6,7 @@ import { addComment } from "../../api/comments";
 import { Modal } from "../postModal/Modal";
 import PostLoader from "../../loaders/PostLoader";
 import { useSelector } from "react-redux";
-
+import Comments from "../comments/comments";
 export default function Posts() {
 	const [showModal, setShowModal] = useState(false);
 	const [content, setContent] = useState("");
@@ -133,18 +133,22 @@ export default function Posts() {
 								</svg>
 							</div>
 							{post?.comments?.length > 0 && (
-								<span>
-									<p onClick={openModal}>
-										View all {post?.comments?.length}{" "}
-										comments
-									</p>
-									<Modal
-										showModal={showModal}
-										setShowModal={setShowModal}
-										data={post}
-									/>
-								</span>
+								<>
+									<span>
+										<p onClick={openModal}>
+											View all {post?.comments?.length}{" "}
+											comments
+										</p>
+										<Modal
+											showModal={showModal}
+											setShowModal={setShowModal}
+											data={post}
+										/>
+									</span>
+									<Comments comment={post.comments} />
+								</>
 							)}
+
 							<div className='footer d-flex align-items-center justify-content-between px-3 pb-2'>
 								<div className='d-flex align-items-center'>
 									<svg

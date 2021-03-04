@@ -76,7 +76,7 @@ function NavBar(props) {
 
 									<div
 										onClick={() =>
-											history.push("/message")
+											history.push("/dm/message")
 										}>
 										<svg
 											className='mx-2 nav-usr-item'
