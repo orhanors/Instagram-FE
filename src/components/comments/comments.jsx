@@ -1,10 +1,12 @@
 import React,{useState} from 'react'
+
 import { AiOutlineHeart } from "react-icons/ai";
 import {TiDeleteOutline} from "react-icons/ti";
 
 
 function Comments({comment}){
-  
+ 
+
     return(
        <>
             {comment.length <1 ? (
