@@ -3,6 +3,11 @@ import "./message.scss";
 import { Container, Row, Col, FormControl } from "react-bootstrap";
 import io from "socket.io-client";
 import { useSelector } from "react-redux";
+import backend from "../../helpers/client";
+import { uniqueArray } from "./message.helpers";
+import useStateWithCallback, {
+	useStateWithCallbackLazy,
+} from "../../helpers/useStateWithCallback";
 const connOpt = {
 	transports: ["websocket"], // socket connectin options
 };
@@ -10,50 +15,113 @@ let socket = io("http://localhost:3001", connOpt);
 function Message(props) {
 	const currentUser = useSelector((state) => state.user.data);
 
+	const [chatList, setChatList] = useState([]);
 	const [message, setMessage] = useState("");
 	const [messages, setMessages] = useState([]);
-	const [chatList, setChatList] = useState([]);
+	const [conversations, setConversations] = useState([]);
 	const [receiver, setReceiver] = useState("");
-	const setInitialChatList = () => {
-		const userNames = [];
+	const [isUserSelected, setIsUserSelected] = useState(false);
 
-		for (let follower of currentUser.followers) {
-			userNames.push(follower.username);
-		}
-		setChatList(userNames);
-	};
 	useEffect(() => {
-		socket.on("connect", () => console.log("connected to socket")); //check if socket is connected
-		if (currentUser.followers) {
-			setInitialChatList();
+		getConversations();
+	}, []);
+	useEffect(() => {
+		getUsersFromConversations();
+	}, [conversations]);
+	useEffect(() => {
+		if (currentUser._id) {
+			socket.emit("startMessaging", { sender: currentUser._id });
+			//check if socket is connected
+
+			socket.on("connect", () => {
+				console.log("🚀  connected to socket");
+			});
 		}
 		return () => socket.removeAllListeners(); //componentWillUnmount
-	}, [currentUser]);
-
+	}, [currentUser._id]);
 	const handleMessage = (e) => {
+		const newMessages = [];
 		if (e.keyCode === 13) {
-			console.log("pressed enter");
-			socket.emit("sendMessage", message);
-
-			socket.on("message", (data) => {
-				console.log("message_received data: ", data);
-				const newMessages = [...messages];
-				newMessages.push(data);
-				setMessages(newMessages);
+			const sender = currentUser._id;
+			const msg = message;
+			socket.emit("privateMessage", { sender, receiver, msg });
+			socket.on("message", (msg) => {
+				setMessages([...messages, msg]);
 			});
 			setMessage("");
 		} else {
 			setMessage(e.target.value);
 		}
 	};
-	const startConversation = (e) => {
-		socket.emit("leaveRoom", currentUser.username + "@" + receiver);
+	const getConversations = async () => {
+		const response = await backend({ url: "/conversations" });
+		setConversations(response.data);
+	};
+
+	const getUsersFromConversations = async () => {
+		const newChatList = [];
+		for (let conversation of conversations) {
+			let userIds = conversation.name.split("@");
+			for (let userId of userIds) {
+				if (userId !== currentUser._id) {
+					const response = await backend({ url: `/users/${userId}` });
+					const newUser = response.data;
+					newChatList.push(newUser);
+					console.log("new user is: ", newUser);
+					setChatList(newChatList);
+				}
+			}
+		}
+	};
+	const getPreviousMessages = async (receiverId) => {
+		const response = await backend({
+			url: `/conversations/messages/${receiverId}`,
+		});
+		setMessages(response.data);
+	};
+	const startConversation = async (e) => {
+		setIsUserSelected(true);
 		setReceiver(e.target.id);
 
-		if (e.target.id === receiver) {
-			const roomName = currentUser.username + "@" + receiver;
-			socket.emit("join", roomName);
+		await getPreviousMessages(e.target.id);
+		const sender = currentUser._id;
+		const receiver = e.target.id;
+
+		if (currentUser._id) {
+			socket.emit("joinConversation", {
+				sender,
+				receiver,
+			});
 		}
+		const response = await backend({
+			url: `/conversations/messages/${receiver}`,
+		});
+		setMessages(response.data);
+	};
+
+	const userMessageCard = (user) => {
+		return (
+			<div
+				onClick={startConversation}
+				name={user}
+				id={user._id}
+				className='msg-user-container d-flex flex-row mb-3'>
+				<img
+					className='user-msg-img'
+					alt='user-msg'
+					src={user.image}
+					style={{
+						borderRadius: "50%",
+						width: "20%",
+						height: "20%",
+						marginRight: "4%",
+					}}
+				/>
+				<div className='username-container'>
+					<p className='mt-2'>{user.username}</p>
+				</div>
+			</div>
+		);
 	};
 	return (
 		<div className='message-container'>
@@ -64,7 +132,9 @@ function Message(props) {
 							<Col md={12}>
 								<div className='message-info'>
 									<div>
-										<h4 className='text-center'>
+										<h4
+											onClick={getUsersFromConversations}
+											className='text-center'>
 											{currentUser.username}
 										</h4>
 										<div></div>
@@ -75,33 +145,42 @@ function Message(props) {
 								<div className='message-people'>
 									{chatList.map((user) => {
 										return (
-											<li
-												key={user}
-												id={user}
-												onClick={startConversation}>
-												{user}
-											</li>
+											<div key={user._id}>
+												{" "}
+												{userMessageCard(user)}
+											</div>
 										);
 									})}
-									<li id='enith' onClick={startConversation}>
-										enith
-									</li>
 								</div>
 							</Col>
 						</Row>
 					</Col>
 
 					<Col md={8}>
-						<Row>
+						<Row className='message-right-container'>
 							<Col md={12}>
 								<div className='message-box'>
 									{messages.map((message) => {
-										return <p>{message}</p>;
+										return message.sender ===
+											currentUser._id ? (
+											<p className='current-user-msg'>
+												{message.msg}
+											</p>
+										) : (
+											<p className='other-user-msg'>
+												{message.msg}
+											</p>
+										);
 									})}
 								</div>
 							</Col>
 							<Col md={12}>
-								<div className='message-input-container'>
+								<div
+									className={
+										isUserSelected
+											? "message-input-container"
+											: "message-input-container d-none"
+									}>
 									<svg
 										aria-label='Emoji'
 										className='smiley '
@@ -119,7 +198,7 @@ function Message(props) {
 										onChange={handleMessage}
 										onKeyDown={handleMessage}
 										className='message-input'
-										placeholder='Message...'
+										placeholder='Message....'
 									/>
 								</div>
 							</Col>
