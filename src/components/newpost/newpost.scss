@@ -23,3 +23,34 @@
     outline: none;
     box-shadow: none;
 }
+
+.file-upload{
+    display: none;
+}
+
+#image-to-post{
+    width: 100%;
+}
+
+#select-to-upload-btn{
+    
+}
+
+.my-post-i{
+    font-size:1.3rem;
+    color:rgb(83, 90, 92);
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+
+}
+.my-post-i:hover{
+    background-color:rgba(168, 168, 168, 0.315);
+    font-size:1.3rem;
+    color:rgb(83, 90, 92);
+    transition: 0.2s;
+}
+
+#plus{
+    color:#e647be;
+}
