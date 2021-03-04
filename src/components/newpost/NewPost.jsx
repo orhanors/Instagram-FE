@@ -39,8 +39,8 @@ const dispatch = useDispatch()
             formData.append('image', file[0])
 
             const response = await backend({ url: "/posts/me",method:"post",data:formData });
-            console.log(response.status, "responnssssss")
-            if(response.status===200){
+            console.log(response.statusCode, "responnssssss")
+            if(response.statusCode===200){
               dispatch(setRefreshTrue(!refresh))
             }
         } catch (error) {

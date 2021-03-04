@@ -8,7 +8,7 @@ import PostLoader from "../../loaders/PostLoader";
 export default function Posts() {
 	const [showModal, setShowModal] = useState(false);
   const [content,setContent] = useState("")
-	const [comment, setComment] = useState("");
+
 	const [loading, setLoading] = useState(true);
 	const openModal = () => {
 		//setShowModal((prev) => !prev);
