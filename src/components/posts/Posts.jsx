@@ -5,27 +5,31 @@ import { getNewsFeedPosts } from "../../api/posts";
 import { addComment } from "../../api/comments";
 import { Modal } from "../postModal/Modal";
 import PostLoader from "../../loaders/PostLoader";
+import { useSelector } from "react-redux";
+
 export default function Posts() {
 	const [showModal, setShowModal] = useState(false);
-  const [content,setContent] = useState("")
-	const [comment, setComment] = useState("");
+	const [content, setContent] = useState("");
+	//const [comment, setComment] = useState("");
 	const [loading, setLoading] = useState(true);
+	const [showComments, setShowComments] = useState(false);
+	const { refresh } = useSelector((state) => state);
 	const openModal = () => {
 		//setShowModal((prev) => !prev);
 		setShowModal(true);
 	};
-  const addNewComment = async(postId)=>{
-    try {
-      const res = await addComment(postId,content)
-      const myarray = [1,2,3]
-      console.log(myarray.length)
-      if(res){
-        setShowComments(!showComments)
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
+	const addNewComment = async (postId) => {
+		try {
+			const res = await addComment(postId, content);
+			const myarray = [1, 2, 3];
+			console.log(myarray.length);
+			if (res) {
+				setShowComments(!showComments);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	const [data, setData] = useState([]);
 	useEffect(async () => {
 		const res = await getNewsFeedPosts();
@@ -33,8 +37,8 @@ export default function Posts() {
 		setData(res);
 		console.log("-0----", res);
 		console.log(data.length);
-	}, [data.length]);
-	const [marginLeft, setMarginLeft] = useState(0);
+	}, [showComments, refresh]);
+	//const [marginLeft, setMarginLeft] = useState(0);
 	const showContent = (post) => {
 		return (
 			<>
@@ -156,10 +160,16 @@ export default function Posts() {
 									<FormControl
 										placeholder='Add a comment'
 										className='comment'
-                    onChange={(e)=>setContent(e.target.value)}
+										onChange={(e) =>
+											setContent(e.target.value)
+										}
 									/>
 								</div>
-								<button className='comment-button' onClick={()=>addNewComment(post._id)}>Post</button>
+								<button
+									className='comment-button'
+									onClick={() => addNewComment(post._id)}>
+									Post
+								</button>
 							</div>
 						</div>
 					);

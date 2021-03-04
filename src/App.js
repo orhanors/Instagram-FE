@@ -13,15 +13,8 @@ import ProtectedRoute from "./customComponents/ProtectedRoute";
 
 import backend from "./helpers/client";
 import Message from "./pages/message/Message";
-import { useDispatch, useSelector } from "react-redux";
-import { setRefreshTrue } from "./store/refresh";
+
 function App(props) {
-	const dispatch = useDispatch();
-	dispatch(setRefreshTrue());
-
-	const { refresh } = useSelector((state) => state);
-
-	console.log("refresh is: ", refresh);
 	const getUsers = async () => {
 		const response = await backend({ url: "/users/" });
 
