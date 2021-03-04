@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import "./Profile.scss";
+import backend from "../../helpers/client";
+import { useHistory } from "react-router-dom";
 
 const EditProfile = (props) => {
   const [show, setShow] = useState(props.showModal);
   const [userImg, setUserImg] = useState(null);
+  const [submit, setSubmit] = useState(false);
 
   let [username, setUsername] = useState(props.user.username);
   let [name, setName] = useState(props.user.name);
   let [surname, setSurname] = useState(props.user.surname);
   let [email, setEmail] = useState(props.user.email);
+  let history = useHistory();
 
   let user = {
       username,
@@ -18,11 +22,32 @@ const EditProfile = (props) => {
       email
   }
 
-  const handleClose = () => setShow(false);
+  const updateProfile = async() => {
+      const response = await backend({
+        url: `/users/me/edit`,
+        method: "put",
+        data: user,
+      })
+      console.log(response.data)
+  }
+
+  function HandleClose() {
+      updateProfile();
+      setShow(false);
+      setSubmit(true);
+      history.push(`/${user.username}`);
+    }
+
   const handleShow = () => setShow(true);
 
   function updateUserIMG(e) {
     setUserImg(e.target.files[0])
+  }
+
+  const handleClose = () => {
+    updateProfile();
+      setShow(false);
+      setSubmit(true);
   }
 
   return (
@@ -36,7 +61,6 @@ const EditProfile = (props) => {
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            Woohoo, you're reading this text in a modal!
             <p>Username</p>
             <input value={username} onChange={(e) => setUsername(e.currentTarget.value)}></input>
             <p>Name</p>
@@ -52,7 +76,7 @@ const EditProfile = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={HandleClose}>
             Save Changes
           </Button>
         </Modal.Footer>

@@ -76,7 +76,9 @@ const ProfileInfo = (props) => {
   useEffect(() => getCurrentUser(), [users]);
 
   useEffect(async () => {
-    setCurrentUser(getCurrentUser);
+    let current = getCurrentUser();
+    console.log(`<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n${current}`)
+    setCurrentUser(current);
   }, [props.match.params.user]);
 
   const getUsers = async () => {
