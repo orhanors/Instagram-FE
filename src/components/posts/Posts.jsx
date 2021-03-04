@@ -1,40 +1,57 @@
 import React ,{useEffect,useState}from "react";
 import "./posts.scss";
+import {useSelector} from "react-redux"
 import { FormControl, Button } from "react-bootstrap";
 import {getNewsFeedPosts} from "../../api/posts"
-import {addComment} from "../../api/comments"
+import {addComment,deleteComment} from "../../api/comments"
 import {Modal } from "../postModal/Modal"
 import Comments from "../comments/Comments"
 export default function Posts() {
   const [showModal, setShowModal] = useState(false);
   const [content,setContent] = useState("")
+  const [showComments,setShowComments] = useState(false)
   const openModal = () => {
     //setShowModal((prev) => !prev);
     setShowModal(true)
   };
+  const { refresh } = useSelector((state) => state);
   const addNewComment = async(postId)=>{
     try {
       const res = await addComment(postId,content)
-      console.log(res)
-      console.log(JSON.stringify(content))
+      const myarray = [1,2,3]
+      console.log(myarray.length)
+      if(res){
+        setShowComments(!showComments)
+      }
     } catch (error) {
       console.log(error)
     }
   }
+  // const deleteMyComment = async()=>{
+  //   try {
+  //     const res = await deleteComment(postId,commentId)
+     
+  //     if(res){
+  //       setShowComments(!showComments)
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
   const [data,setData]= useState([])
 	useEffect(async()=>{
 		const res =await getNewsFeedPosts()
 		setData(res)
     console.log("-0----",res)
     console.log(data.length)
-	},[showModal])
+	},[showComments,refresh])
   const [marginLeft, setMarginLeft] = useState(0);
 
 
   return (
     
     <div>
-      {data && data.map((post)=>{
+      {data && data.map((post,key)=>{
         return (
           <div className="container-post mb-5">
           <div className="d-flex justify-content-between align-items-center mx-3 my-2">
@@ -140,7 +157,7 @@ export default function Posts() {
           {post.comments.length>0 &&
            <span>
             <p onClick={openModal}>View all {post.comments.length} comments</p>
-            <Modal showModal={showModal} setShowModal={setShowModal} data={post}/>
+            <Modal showModal={showModal} setShowModal={setShowModal} data={post} key={key}/>
             
             </span>
             

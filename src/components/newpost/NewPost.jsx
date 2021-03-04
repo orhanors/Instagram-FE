@@ -3,17 +3,30 @@ import './newpost.scss'
 import {Button, Modal, FormControl} from 'react-bootstrap'
 import backend from "../../helpers/client"
 
-export default function NewPost(props) {
+import { useDispatch, useSelector } from "react-redux";
+import { setRefreshTrue } from "../../store/refresh";
+function NewPost(props) {
+
+ 
+	
+
+
+	
+const dispatch = useDispatch()
+	const { refresh } = useSelector((state) => state);
+
+	console.log("refresh is: ", refresh);
     const [show, setShow] = useState(false);
     const [file, setFile] = useState()
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  
+  const { data } = useSelector((state) => state.user);
   const handleFile = (e) =>{
         let file = e.target.files
         setFile(file)
         console.log(e.target.files, "$$$$")
+       
         console.log(e.target.files[0], "$$$$")
     } 
 
@@ -23,10 +36,13 @@ export default function NewPost(props) {
 
             let formData = new FormData();
 
-            formData.append('image', file)
+            formData.append('image', file[0])
 
             const response = await backend({ url: "/posts/me",method:"post",data:formData });
-            console.log(response, "responnssssss")
+            console.log(response.status, "responnssssss")
+            if(response.status===200){
+              dispatch(setRefreshTrue(!refresh))
+            }
         } catch (error) {
             
         }
@@ -60,3 +76,4 @@ export default function NewPost(props) {
         </div>
     )
 }
+export default NewPost

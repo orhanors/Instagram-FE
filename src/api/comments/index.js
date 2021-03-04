@@ -8,3 +8,9 @@ export const addComment = async (postId,content) => {
     return await response.data
     
 };
+
+export const deleteComment = async(postId,commentId)=>{
+    const response = await backend({url:`/comments/${postId}/${commentId}`})
+
+    return response
+}
