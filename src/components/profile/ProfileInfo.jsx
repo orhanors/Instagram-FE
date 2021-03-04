@@ -94,6 +94,8 @@ const ProfileInfo = (props) => {
     console.log(response.data);
   }
 
+  useEffect(()=>getCurrentUser(), [following])
+
   useEffect(async () => {
     try {
       console.log("current user: ", currentUser._id);
