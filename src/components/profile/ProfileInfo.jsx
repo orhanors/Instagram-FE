@@ -67,6 +67,8 @@ const ProfileInfo = (props) => {
     try{
     console.log('current user: ', currentUser._id)
     currentUser._id && getUsersPosts(currentUser._id)
+    setFollowers(currentUser.followers);
+    setFollowing2(currentUser.following)
     } catch(err){
       console.log(err)
     }
@@ -129,10 +131,10 @@ const ProfileInfo = (props) => {
                 <strong>{allPosts && allPosts.length}</strong> posts
               </p>
               <p>
-                <strong>{followers}</strong> followers
+                <strong>{followers && followers.length}</strong> followers
               </p>
               <p>
-                <strong>{following}</strong> following
+                <strong>{following2 && following2.length}</strong> following
               </p>
             </Row>
             <Row className="firstRow">
