@@ -44,6 +44,23 @@ const ProfileInfo = (props) => {
     } else {
       setMe(false)
     }
+    
+    
+    //console.log("loggedInUser.following: ", loggedInUser.following)
+    if(followers.includes(loggedInUser._id)){
+      setFollowing(true);
+      console.log('following')
+    } else {
+      setFollowing(false);
+      console.log('!following: ', followers, ".......", loggedInUser._id)
+    }
+    // if(loggedInUser.following.includes(current[0]._id)){
+    //   console.log('following2: ', loggedInUser.following, 'currentUser: ', current[0]._id)
+    //   setFollowing(true)
+    // } else {
+    //   setFollowing(false)
+    //   console.log('ELSE:following2: ', loggedInUser.following, 'currentUser: ', current[0]._id)
+    // }
   } catch(err){
     console.log(err)
   }
