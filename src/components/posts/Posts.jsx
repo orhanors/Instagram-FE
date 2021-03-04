@@ -38,11 +38,11 @@ export default function Posts() {
             <div className="header d-flex ">
               <img
                 className="post-header-img mr-3"
-                src={post.user.image}
+                src={post?.user?.image}
                 alt=""
               />
               <div className="d-flex flex-column">
-                <h6>{post.user.username}</h6>
+                <h6>{post?.user?.username}</h6>
                 <small>Bramall Lane</small>
               </div>
             </div>
@@ -134,9 +134,9 @@ export default function Posts() {
               <path d="M43.5 48c-.4 0-.8-.2-1.1-.4L24 29 5.6 47.6c-.4.4-1.1.6-1.6.3-.6-.2-1-.8-1-1.4v-45C3 .7 3.7 0 4.5 0h39c.8 0 1.5.7 1.5 1.5v45c0 .6-.4 1.2-.9 1.4-.2.1-.4.1-.6.1zM24 26c.8 0 1.6.3 2.2.9l15.8 16V3H6v39.9l15.8-16c.6-.6 1.4-.9 2.2-.9z"></path>
             </svg>
           </div>
-          {post.comments.length>0 &&
+          {post?.comments?.length>0 &&
          <span>
-            <p onClick={openModal}>View all {post.comments.length} comments</p>
+            <p onClick={openModal}>View all {post?.comments?.length} comments</p>
             <Modal showModal={showModal} setShowModal={setShowModal} data={post}/>
             </span>
          
