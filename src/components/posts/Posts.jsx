@@ -4,9 +4,15 @@ import { FormControl, Button } from "react-bootstrap";
 import {getNewsFeedPosts} from "../../api/posts"
 import {addComment} from "../../api/comments"
 import {Modal } from "../postModal/Modal"
+import { NewPostModal} from "../newPostModal/NewPostModal"
 export default function Posts() {
   const [showModal, setShowModal] = useState(false);
   const [comment,setComment] = useState("")
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const openModal = () => {
     //setShowModal((prev) => !prev);
     setShowModal(true)
@@ -84,8 +90,8 @@ export default function Posts() {
             src={post.image}
             alt=""
           />
-          
-          <div className="d-flex justify-content-between px-3 py-3">
+          <div>
+          <div className="d-flex justify-content-between px-3 pt-3 mb-1">
             <div className="d-flex">
               <svg
                 className="mr-4"
@@ -133,14 +139,20 @@ export default function Posts() {
             >
               <path d="M43.5 48c-.4 0-.8-.2-1.1-.4L24 29 5.6 47.6c-.4.4-1.1.6-1.6.3-.6-.2-1-.8-1-1.4v-45C3 .7 3.7 0 4.5 0h39c.8 0 1.5.7 1.5 1.5v45c0 .6-.4 1.2-.9 1.4-.2.1-.4.1-.6.1zM24 26c.8 0 1.6.3 2.2.9l15.8 16V3H6v39.9l15.8-16c.6-.6 1.4-.9 2.2-.9z"></path>
             </svg>
+            
           </div>
           {post?.comments?.length>0 &&
          <span>
-            <p onClick={openModal}>View all {post?.comments?.length} comments</p>
+            <small onClick={openModal} className="pl-3 mb -1">View all {post?.comments?.length} comments</small>
             <Modal showModal={showModal} setShowModal={setShowModal} data={post}/>
             </span>
          
           }
+          <div>
+            <NewPostModal show={show} setShow={setShow} handleClose={handleClose} handleShow={handleShow}/>
+          </div>
+          </div>
+          
           <div className="footer d-flex align-items-center justify-content-between px-3 pb-2">
               <div className="d-flex align-items-center">
                   <svg aria-label="Emoji" class="_8-yf5 " fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path d="M24 48C10.8 48 0 37.2 0 24S10.8 0 24 0s24 10.8 24 24-10.8 24-24 24zm0-45C12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21S35.6 3 24 3z"></path><path d="M34.9 24c0-1.4-1.1-2.5-2.5-2.5s-2.5 1.1-2.5 2.5 1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5zm-21.8 0c0-1.4 1.1-2.5 2.5-2.5s2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5-2.5-1.1-2.5-2.5zM24 37.3c-5.2 0-8-3.5-8.2-3.7-.5-.6-.4-1.6.2-2.1.6-.5 1.6-.4 2.1.2.1.1 2.1 2.5 5.8 2.5 3.7 0 5.8-2.5 5.8-2.5.5-.6 1.5-.7 2.1-.2.6.5.7 1.5.2 2.1 0 .2-2.8 3.7-8 3.7z"></path></svg>
