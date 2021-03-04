@@ -25,6 +25,9 @@ export default function Posts() {
     console.log("-0----",res)
     console.log(data.length)
 	},[data.length])
+  const [marginLeft, setMarginLeft] = useState(0);
+
+
   return (
     
     <div>

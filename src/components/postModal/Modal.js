@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { MdClose } from "react-icons/md";
 import { Row, Col, FormControl } from "react-bootstrap";
 import "./Modal.scss";
-import "../post/Posts.jsx";
+import "../posts/Posts.jsx";
 import { AiOutlineHeart } from "react-icons/ai";
 import {TiDeleteOutline} from "react-icons/ti";
 
