@@ -21,7 +21,6 @@ const Search = () => {
   const getUsers = async () => {
     const response = await backend({ url: "/users/" });
 
-    console.log("users: ", response.data);
     setUsers(response.data);
   };
 
@@ -36,7 +35,6 @@ const Search = () => {
 
   useEffect(()=>{
     filterUsers();
-    console.log('changed:::', filteredUsers)
 }, [searchValue]);
 
   return (
@@ -54,7 +52,7 @@ const Search = () => {
         getLabelProps,
       }) => (
         <div>
-          {console.log("inputValue::::::", inputValue)}
+          {/*console.log("inputValue::::::", inputValue)*/}
           <br />
           <input
             type="text"
@@ -80,7 +78,7 @@ const Search = () => {
                   >
                     {item && (
                       <Row className="pr-2 pl-2">
-                        <Link to={`/albumPage/${item.username}`}>
+                        <Link to={`/${item.username}`}>
                           {/*<p
                             style={{
                               color: "black",

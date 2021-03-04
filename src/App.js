@@ -39,7 +39,7 @@ function App(props) {
 				<Route path='/signup' exact component={Signup} />
 				<ProtectedRoute path='/' exact component={Home} />
 				<ProtectedRoute path='/message' exact component={Message} />
-				<ProtectedRoute path='/me' component={Profile} exact />
+				<ProtectedRoute path='/:user' component={Profile} exact />
 			</Router>
 		</div>
 	);
