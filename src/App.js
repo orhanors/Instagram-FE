@@ -19,8 +19,7 @@ function App(props) {
 
 
 
-		console.log("APP response is: ", response.data);
-	};
+
 	const getUsers = async () => {
 		const response = await backend({ url: "/users/" });
 
