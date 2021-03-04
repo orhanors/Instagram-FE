@@ -88,6 +88,12 @@ const ProfileInfo = (props) => {
     return result;
   };
 
+  const follow = async() => {
+    const response = await backend({ url: `/users/follow/${currentUser._id}`,method:"post", data:currentUser });
+    setFollowing(true)
+    console.log(response.data);
+  }
+
   useEffect(async () => {
     try {
       console.log("current user: ", currentUser._id);
@@ -141,7 +147,7 @@ const ProfileInfo = (props) => {
                   )
                 : !me && (
                     <div className="follow-btns">
-                      <button className="follow-btn">Follow</button>
+                      <button className="follow-btn" onClick={follow}>Follow</button>
                       <button className="more">
                         <IoMdArrowDropdown />
                       </button>
