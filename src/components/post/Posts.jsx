@@ -2,14 +2,22 @@ import React ,{useEffect,useState}from "react";
 import "./posts.scss";
 import { FormControl, Button } from "react-bootstrap";
 import {getNewsFeedPosts} from "../../api/posts"
+import {addComment} from "../../api/comments"
 import {Modal } from "../postModal/Modal"
 export default function Posts() {
   const [showModal, setShowModal] = useState(false);
-
+  const [comment,setComment] = useState("")
   const openModal = () => {
     //setShowModal((prev) => !prev);
     setShowModal(true)
   };
+  const addNewComment = async(postId)=>{
+    try {
+      const res = await addComment(postId)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const [data,setData]= useState([])
 	useEffect(async()=>{
 		const res =await getNewsFeedPosts()
