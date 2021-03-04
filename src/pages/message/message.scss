@@ -2,38 +2,60 @@
 	margin-top: 2%;
 	.message-people,
 	.message-box {
-		background-color: red;
-		border: 1px solid gray;
 		overflow-y: auto;
 		padding: 4%;
+		background-color: white;
 	}
 	.message-info {
 		width: 25vw;
 		height: 12vh;
-		border: 1px solid gray;
+		border-right: 1px solid rgb(209, 209, 209);
+		border-top: 1px solid rgb(209, 209, 209);
+		border-left: 1px solid rgb(209, 209, 209);
 		padding: 10%;
-		background-color: green;
+		background-color: white;
 	}
 	.message-people {
 		width: 25vw;
 		height: 73vh;
+		border: 1px solid rgb(209, 209, 209);
 	}
 
 	.message-box,
 	.message-input-container {
 		width: 50vw;
 		margin-left: 2rem;
+		background-color: white;
 	}
+
 	.message-box {
 		height: 75vh;
-		background-color: blue;
 		position: relative;
+		border-right: 1px solid rgb(209, 209, 209);
+		border-left: 1px solid rgb(209, 209, 209);
+		border-top: 1px solid rgb(209, 209, 209);
+
+		.current-user-msg {
+			text-align: left;
+			background-color: #efefef;
+			margin-left: 60%;
+			padding: 1rem;
+			border-radius: 20px;
+		}
+
+		.other-user-msg {
+			padding: 1rem;
+			border: 1px solid rgb(209, 209, 209);
+			margin-right: 60%;
+			border-radius: 20px;
+		}
 	}
 
 	.message-input-container {
-		background-color: yellow;
-		margin-top: 1vh;
 		height: 9vh;
+		border-bottom: 1px solid rgb(209, 209, 209);
+		border-right: 1px solid rgb(209, 209, 209);
+		border-left: 1px solid rgb(209, 209, 209);
 		.smiley {
 			position: absolute;
 			bottom: 4vh;
@@ -50,6 +72,21 @@
 			padding-bottom: 0.5rem;
 			border: 1px solid gray;
 			border-radius: 20px;
+		}
+	}
+
+	.msg-user-container {
+		z-index: 1000;
+		padding: 3%;
+		border-radius: 10px;
+		&:hover {
+			cursor: pointer;
+			background-color: rgba(218, 218, 218, 0.432);
+		}
+
+		.username-container,
+		.user-msg-img {
+			pointer-events: none;
 		}
 	}
 }
