@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Dropdown } from "react-bootstrap";
 import "./Profile.scss";
 import { IoIosSettings } from "react-icons/io";
 import { FaUserCheck } from "react-icons/fa";
@@ -35,36 +35,40 @@ const ProfileInfo = (props) => {
   //     }
   // }
 
-  useEffect(async()=>{
-    try{
-    let current = await getCurrentUser();
-    console.log("current: ", current[0].username, "\nloggedin: ", loggedInUser.username)
-    if(current[0].username == loggedInUser.username){
-      setMe(true)
-    } else {
-      setMe(false)
+  useEffect(async () => {
+    try {
+      let current = await getCurrentUser();
+      console.log(
+        "current: ",
+        current[0].username,
+        "\nloggedin: ",
+        loggedInUser.username
+      );
+      if (current[0].username == loggedInUser.username) {
+        setMe(true);
+      } else {
+        setMe(false);
+      }
+
+      //console.log("loggedInUser.following: ", loggedInUser.following)
+      if (followers.includes(loggedInUser._id)) {
+        setFollowing(true);
+        console.log("following");
+      } else {
+        setFollowing(false);
+        console.log("!following: ", followers, ".......", loggedInUser._id);
+      }
+      // if(loggedInUser.following.includes(current[0]._id)){
+      //   console.log('following2: ', loggedInUser.following, 'currentUser: ', current[0]._id)
+      //   setFollowing(true)
+      // } else {
+      //   setFollowing(false)
+      //   console.log('ELSE:following2: ', loggedInUser.following, 'currentUser: ', current[0]._id)
+      // }
+    } catch (err) {
+      console.log(err);
     }
-    
-    
-    //console.log("loggedInUser.following: ", loggedInUser.following)
-    if(followers.includes(loggedInUser._id)){
-      setFollowing(true);
-      console.log('following')
-    } else {
-      setFollowing(false);
-      console.log('!following: ', followers, ".......", loggedInUser._id)
-    }
-    // if(loggedInUser.following.includes(current[0]._id)){
-    //   console.log('following2: ', loggedInUser.following, 'currentUser: ', current[0]._id)
-    //   setFollowing(true)
-    // } else {
-    //   setFollowing(false)
-    //   console.log('ELSE:following2: ', loggedInUser.following, 'currentUser: ', current[0]._id)
-    // }
-  } catch(err){
-    console.log(err)
-  }
-  })
+  });
 
   useEffect(() => getCurrentUser(), [users]);
 
@@ -88,15 +92,29 @@ const ProfileInfo = (props) => {
     return result;
   };
 
-  const follow = async() => {
-    const response = await backend({ url: `/users/follow/${currentUser._id}`,method:"post", data:currentUser });
-    setFollowing(true)
+  const follow = async () => {
+    const response = await backend({
+      url: `/users/follow/${currentUser._id}`,
+      method: "post",
+      data: currentUser,
+    });
+    setFollowing(true);
+    console.log(response.data);
+  };
+
+  const unfollow = async() => {
+    const response = await backend({
+      url: `/users/unfollow/${currentUser._id}`,
+      method: "delete"
+    });
+    setFollowing(true);
     console.log(response.data);
   }
 
-  useEffect(()=>{
-    getCurrentUser();
-  }, [following])
+  useEffect(() => {
+    let current = getCurrentUser();
+    setCurrentUser(current);
+  }, [following]);
 
   useEffect(async () => {
     try {
@@ -140,7 +158,7 @@ const ProfileInfo = (props) => {
                 ? !me && (
                     <div className="following-btns">
                       <button className="message-btn">Message</button>
-                      <button className="following">
+                      <button className="following" onClick={unfollow}>
                         <FaUserCheck />
                       </button>
                       <button className="sugested">
@@ -151,7 +169,9 @@ const ProfileInfo = (props) => {
                   )
                 : !me && (
                     <div className="follow-btns">
-                      <button className="follow-btn" onClick={follow}>Follow</button>
+                      <button className="follow-btn" onClick={follow}>
+                        Follow
+                      </button>
                       <button className="more">
                         <IoMdArrowDropdown />
                       </button>
