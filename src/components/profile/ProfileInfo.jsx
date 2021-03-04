@@ -9,15 +9,18 @@ import { HiDotsHorizontal } from "react-icons/hi";
 import backend from "../../helpers/client";
 import { withRouter } from "react-router-dom";
 import { useEffect } from "react";
+import EditProfile from "./EditProfile";
 
 const ProfileInfo = (props) => {
   let [me, setMe] = useState(false);
   let [following, setFollowing] = useState(false);
+  let [openModal, setOpenModal] = useState(false);
   let [users, setUsers] = useState([]);
   let [currentUser, setCurrentUser] = useState({ _id: 0 });
   let [allPosts, setAllPosts] = useState([]);
   let [followers, setFollowers] = useState(0);
   let [following2, setFollowing2] = useState(0);
+  let [userImg, setUserImg] = useState(null);
 
   const loggedInUser = useSelector((state) => state.user.data);
   //console.log('current user: ',currentUser)
@@ -133,24 +136,26 @@ const ProfileInfo = (props) => {
     setAllPosts(allPosts.data);
   };
 
+  function updateUserIMG(e) {
+    setUserImg(e.target.files[0])
+  }
+
   return (
     <Container className="container">
       {currentUser && (
         <Row>
           <Col xs={11} md={3}>
-            <img
-              src={currentUser && currentUser.image}
-              className="profile-img"
-            />
+          <img
+            src={currentUser && currentUser.image}
+            className="profile-img"
+          />
           </Col>
           <Col xs={11} md={8} mt-4>
             <Row className="firstRow">
               <p className="username">{currentUser && currentUser.username}</p>
               {me && (
                 <>
-                  <button className="editProfie-btn">
-                    <strong>Edit Profile</strong>
-                  </button>
+                  <EditProfile showModal={openModal} className="editProfie-btn" onClick={()=>setOpenModal(true)} user={currentUser}/>
                   <IoIosSettings className="settings-btn" />
                 </>
               )}

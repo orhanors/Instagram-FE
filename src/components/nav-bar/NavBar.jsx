@@ -33,7 +33,7 @@ function NavBar(props) {
             </div>
           </Col>
           <Col xs={4}>
-            <div className="myContainer d-flex justify-content-between mb-2 mx-5 align-items-center py-2">
+            <div className="myContainer d-flex justify-content-center mb-2 mx-5 align-items-center py-2">
               <div className="d-flex">
                 <svg
                   className="mx-2"
