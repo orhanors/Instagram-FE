@@ -14,7 +14,7 @@ const ProfileInfo = (props) => {
   let [me, setMe] = useState(false);
   let [following, setFollowing] = useState(false);
   let [users, setUsers] = useState([]);
-  let [currentUser, setCurrentUser] = useState({_id: 0});
+  let [currentUser, setCurrentUser] = useState({ _id: 0 });
   let [allPosts, setAllPosts] = useState([]);
   let [followers, setFollowers] = useState(0);
   let [following2, setFollowing2] = useState(0);
@@ -27,20 +27,33 @@ const ProfileInfo = (props) => {
     getUsers();
   }, []);
 
-//   function user() {
-//     if(currentUser[0]._id) {
-//       getUsersPosts(currentUser[0]._id)
-//     } else {
-//       user();
-//     }
-// }
+  //   function user() {
+  //     if(currentUser[0]._id) {
+  //       getUsersPosts(currentUser[0]._id)
+  //     } else {
+  //       user();
+  //     }
+  // }
+
+  useEffect(async()=>{
+    try{
+    let current = await getCurrentUser();
+    console.log("current: ", current[0].username, "\nloggedin: ", loggedInUser.username)
+    if(current[0].username == loggedInUser.username){
+      setMe(true)
+    } else {
+      setMe(false)
+    }
+  } catch(err){
+    console.log(err)
+  }
+  })
 
   useEffect(() => getCurrentUser(), [users]);
 
   useEffect(async () => {
     setCurrentUser(getCurrentUser);
   }, [props.match.params.user]);
-
 
   const getUsers = async () => {
     const response = await backend({ url: "/users/" });
@@ -58,27 +71,22 @@ const ProfileInfo = (props) => {
     return result;
   };
 
-  useEffect(async()=>{
-    // (currentUser && currentUser[0]._id) ? getUsersPosts(currentUser[0]._id) : setTimeout(() => {
-    //   console.log('This will run after 1 second!')
-    //   currentUser[0]._id && getUsersPosts(currentUser[0]._id)
-    //   console.log('id of current user: ', currentUser[0]._id)
-    // }, 2000)
-    try{
-    console.log('current user: ', currentUser._id)
-    currentUser._id && getUsersPosts(currentUser._id)
-    setFollowers(currentUser.followers);
-    setFollowing2(currentUser.following)
-    } catch(err){
-      console.log(err)
+  useEffect(async () => {
+    try {
+      console.log("current user: ", currentUser._id);
+      currentUser._id && getUsersPosts(currentUser._id);
+      setFollowers(currentUser.followers);
+      setFollowing2(currentUser.following);
+    } catch (err) {
+      console.log(err);
     }
-  }, [currentUser])
+  }, [currentUser]);
 
   const getUsersPosts = async (id) => {
-    let allPosts = await backend({url: `/posts/all/${id}`})
-    console.log("all posts of this user: ", allPosts.data)
+    let allPosts = await backend({ url: `/posts/all/${id}` });
+    console.log("all posts of this user: ", allPosts.data);
     setAllPosts(allPosts.data);
-  }
+  };
 
   return (
     <Container className="container">
@@ -92,9 +100,7 @@ const ProfileInfo = (props) => {
           </Col>
           <Col xs={11} md={8} mt-4>
             <Row className="firstRow">
-              <p className="username">
-                {currentUser && currentUser.username}
-              </p>
+              <p className="username">{currentUser && currentUser.username}</p>
               {me && (
                 <>
                   <button className="editProfie-btn">
