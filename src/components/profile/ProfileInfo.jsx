@@ -11,6 +11,8 @@ import { withRouter } from "react-router-dom";
 import { useEffect, useCallback } from "react";
 import EditProfile from "./EditProfile";
 import EditPicture from "./EditPicture";
+import FollowersModal from "./FollowersModal";
+import FollowingModal from "./FollowingModal";
 
 const ProfileInfo = (props) => {
   let [me, setMe] = useState(false);
@@ -23,6 +25,8 @@ const ProfileInfo = (props) => {
   let [followers, setFollowers] = useState([]);
   let [following2, setFollowing2] = useState([]);
   let [userImg, setUserImg] = useState(null);
+  let [showFollowersModal, setShowFollowersModal] = useState(false);
+  let [showFollowingModal, setShowFollowingModal] = useState(false);
 
   const loggedInUser = useSelector((state) => state.user.data);
   //console.log('current user: ',currentUser)
@@ -203,12 +207,14 @@ const ProfileInfo = (props) => {
               <p>
                 <strong>{allPosts && allPosts.length}</strong> posts
               </p>
-              <p>
+              <p onClick={() => {setShowFollowersModal(true); console.log("🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥", showFollowersModal)}}>
                 <strong>{followers && followers.length}</strong> followers
               </p>
-              <p>
+              <p onClick={() => setShowFollowingModal(true)}>
                 <strong>{following2 && following2.length}</strong> following
               </p>
+              <FollowersModal show={showFollowersModal}/>
+              <FollowingModal show={showFollowingModal}/>
             </Row>
             <Row className="firstRow">
               <p>
