@@ -18,7 +18,7 @@ function NewPost(props) {
 
 	const handleFile = (e) => {
 		const formData = new FormData();
-		formData.append("post", e.target.files[0]);
+		formData.append("image", e.target.files[0]);
 
 		setFile(formData);
 		setInput(URL.createObjectURL(e.target.files[0]));

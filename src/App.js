@@ -4,7 +4,7 @@ import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 
 import React, { useEffect } from "react";
-import Singlepost from "./components/showpost/Singlepost"
+import Singlepost from "./components/showpost/Singlepost";
 import NavBar from "./components/nav-bar/NavBar";
 import Home from "./pages/home/Home";
 import StickyBox from "react-sticky-box";
@@ -27,7 +27,7 @@ function App(props) {
 				<StickyBox style={{ zIndex: "99" }}>
 					<NavBar />
 				</StickyBox>
-				<Route path='/:postId' exact component={Singlepost} />
+				<Route path='/p/:postId' exact component={Singlepost} />
 				<Route path='/login' exact component={Login} />
 				<Route path='/signup' exact component={Signup} />
 				<ProtectedRoute path='/' exact component={Home} />
