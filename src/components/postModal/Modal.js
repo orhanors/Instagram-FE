@@ -132,7 +132,7 @@ export const Modal = ({ showModal, setShowModal,data }) => {
             <ModalWrapper showModal={showModal}>
               <div className='d-flex'>
                 <Col xs={8} style={{padding: "0"}}>
-                  <ModalImg src={data.image} alt="camera"/>
+                  <ModalImg src={data?.image} alt="camera"/>
                 </Col>
                 <Col xs={4}>
                   <ModalContent>
@@ -141,17 +141,17 @@ export const Modal = ({ showModal, setShowModal,data }) => {
                         <div className="user-info">
                           <img src="http://placehold.it/100x100" />
                           <p>
-                            <strong>{data.user.username}</strong>
+                            <strong>{data?.user?.username}</strong>
                           </p>
                         
                         </div>
-                        {data.description &&
+                        {data?.description &&
                         <div className="user-info">
-                        <img src={data.user.image} />
+                        <img src={data?.user?.image} />
                         
                         <p>
-                          <strong>{data.user.username}</strong>
-                          <span className="comment-content">{data.description}</span>
+                          <strong>{data?.user?.username}</strong>
+                          <span className="comment-content">{data?.description}</span>
                           
                         </p>
                         <hr />
@@ -161,14 +161,14 @@ export const Modal = ({ showModal, setShowModal,data }) => {
                       
                      
                       <div className="display-comment">
-                      {data && data.comments.map((comment)=>{
+                      {data && data?.comments?.map((comment)=>{
                             return(
                               <div className="user-info">
-                              <img src={data.user.image} />
+                              <img src={data?.user?.image} />
                               
                               <p>
-                                <strong>{comment.user.username}</strong>
-                                <span className="comment-content">{comment.content}</span>
+                                <strong>{comment?.user?.username}</strong>
+                                <span className="comment-content">{comment?.content}</span>
                                 <AiOutlineHeart className="comment-heart" />
                                 <TiDeleteOutline className="comment-delete" />
                               </p>
