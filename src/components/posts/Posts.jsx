@@ -6,6 +6,7 @@ import { addComment } from "../../api/comments";
 import { Modal } from "../postModal/Modal";
 import PostLoader from "../../loaders/PostLoader";
 import { useSelector } from "react-redux";
+import Likes from "../likes/Likes";
 
 export default function Posts() {
 	const [showModal, setShowModal] = useState(false);
@@ -13,7 +14,9 @@ export default function Posts() {
 	//const [comment, setComment] = useState("");
 	const [loading, setLoading] = useState(true);
 	const [showComments, setShowComments] = useState(false);
+  const [showRedHeart,setShowRedHeart]=useState(false)
 	const { refresh } = useSelector((state) => state);
+  const { data } = useSelector((state) => state.user);
 	const openModal = () => {
 		//setShowModal((prev) => !prev);
 		setShowModal(true);
@@ -30,21 +33,29 @@ export default function Posts() {
 			console.log(error);
 		}
 	};
-	const [data, setData] = useState([]);
+
+
+  
+	const [allposts, setAllPosts] = useState([]);
 	useEffect(async () => {
+    // let changeLike=allposts.map((post)=> post.likes.map((like)=>like))
+    let poz=false;
+    let neg=false
+    let newArray;
+      
+      
 		const res = await getNewsFeedPosts();
 		setLoading(false);
-		setData(res);
-		console.log("-0----", res);
-		console.log(data.length);
+		setAllPosts(res);
+		
 	}, [showComments, refresh]);
 	//const [marginLeft, setMarginLeft] = useState(0);
 	const showContent = (post) => {
 		return (
 			<>
-				{data?.map((post) => {
+				{allposts?.map((post,key) => {
 					return (
-						<div className='container-post mb-5'>
+						<div className='container-post mb-5' key={key}>
 							<div className='d-flex justify-content-between align-items-center mx-3 my-2'>
 								<div className='header d-flex '>
 									<img
@@ -87,18 +98,12 @@ export default function Posts() {
 								</button>
 							</div>
 							<img className='post-img' src={post.image} alt='' />
-
+              <div>{post.likes.length}adsssss</div>
 							<div className='d-flex justify-content-between px-3 py-3'>
 								<div className='d-flex'>
-									<svg
-										className='mr-4'
-										aria-label='Like'
-										fill='#262626'
-										height='24'
-										viewBox='0 0 48 48'
-										width='24'>
-										<path d='M34.6 6.1c5.7 0 10.4 5.2 10.4 11.5 0 6.8-5.9 11-11.5 16S25 41.3 24 41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3 11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3 1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9 1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z'></path>
-									</svg>
+                  {post.likes.length >0 ?( <Likes mypostId={post._id} myid={post.likes}/>):( <Likes mypostId={post._id} />)}
+                
+									
 									<svg
 										className='mr-4'
 										aria-label='Comment'
@@ -141,7 +146,7 @@ export default function Posts() {
 									<Modal
 										showModal={showModal}
 										setShowModal={setShowModal}
-										data={post}
+										allposts={post}
 									/>
 								</span>
 							)}
