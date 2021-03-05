@@ -31,7 +31,6 @@
 		"web-vitals": "^1.1.0"
 	},
 	"scripts": {
-		"postbuild": "node webconfig/copyWebConfig.js",
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
