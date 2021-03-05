@@ -1,65 +1,24 @@
-.user-info{
-    position: relative;
-    top: 8px;
-    left: -80px !important;
-    padding: 10px;
-    display: flex;
-    flex-direction: row;
+
+.myCloseButton{
+    position: absolute !important;
+    color: rgb(255, 255, 255) !important;
+    top: -100px;
+    right: -50px;
+    font-size:1.8rem;
+    cursor: pointer;
 }
-.user-info img{
-    width: 40px;
-    height: 40px;
+
+.myFProfileImg{
+    width: 2.5rem;
     border-radius: 50%;
-    margin-right: 1rem;
 }
-.user-info p{
-    font-size: 0.8rem;
-    padding-top: 4px;
+.myFPostImg{
+    width:60%;
+    height:100%;
 }
-.hr{
-    color: #444;
+
+#scroll-comment{
+    height: 350px;
+    overflow-y: scroll;
 }
-.display-comment{
-    position: relative;
-    left: 45px;
-}
-.comment-heart{
-    position: absolute;
-    right: -10px;
-    top: 17px;
-    font-size: 1rem;
-}
-.comment-delete{
-    position: absolute;
-    right: -25px;
-    top: 17px;
-    font-size: 1rem;
-}
-.leave-comment{
-    margin: 0px;
-    padding: 0px !important;
-    position: absolute;
-    left: -14px;
-    width: 95%;
-    padding-top: 8px !important;
-    bottom: 17px;
-    border-top: 1px solid #444;
-}
-.icons{
-    margin-left: 3px !important;
-    font-size: 0.5rem !important;
-    display: inline-block;
-}
-.comment-content{
-    padding-left: 5px;
-}
-.num-of-likes{
-    font-size: 0.8rem;
-    margin-left: 20px;
-    display: block !important;
-}
-.day-ago{
-    font-size: 0.8rem;
-    margin-left: 2rem;
-    display: block !important;
-}
+
