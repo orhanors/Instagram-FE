@@ -13,7 +13,7 @@ const Container = styled.div`
   height: 100vh;
 `;
 
-const PostCart = ({ img }) => {
+const PostCart = ({ img, post }) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
@@ -26,9 +26,20 @@ const PostCart = ({ img }) => {
       <img src={img} id="myImg" />
       <Modal showModal={showModal} setShowModal={setShowModal} />
       <span className="overlay-icons" style={{ margin: "0 auto" }}>
-        <AiFillHeart className="heart-outline" />
-        31
-        <FaComment className="play ml-4" />5
+        {
+          post.comments.length > 0 && 
+          (<>
+            <AiFillHeart className="heart-outline" /> 
+            {post.comments.length}
+          </>)
+        }
+        {
+          post.likes.length > 0 && 
+          (<>
+            <FaComment className="play ml-4" />
+            {post.likes.length}
+          </>)
+        }
       </span>
     </Col>
   );
