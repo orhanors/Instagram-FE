@@ -35,7 +35,7 @@ function Comments({ comment }) {
                 </div>
               </div>
             </div>
-            <div className="user-info my-2">
+            {comment[1] ? <div className="user-info my-2">
               <div className="d-flex justify-content-between">
                 <div className="d-flex align-items-center">
                   <strong className="mr-2">{comment[1]?.user.username}</strong>
@@ -47,6 +47,7 @@ function Comments({ comment }) {
                 </div>
               </div>
             </div>
+			: ""}
           </>
         )}
         <small
