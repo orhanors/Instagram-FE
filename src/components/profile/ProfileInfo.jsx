@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Dropdown } from "react-bootstrap";
 import "./Profile.scss";
 import { IoIosSettings } from "react-icons/io";
 import { FaUserCheck } from "react-icons/fa";
@@ -8,19 +8,27 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { HiDotsHorizontal } from "react-icons/hi";
 import backend from "../../helpers/client";
 import { withRouter } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
+import EditProfile from "./EditProfile";
+import EditPicture from "./EditPicture";
 
 const ProfileInfo = (props) => {
   let [me, setMe] = useState(false);
   let [following, setFollowing] = useState(false);
+  let [openModal, setOpenModal] = useState(false);
+  let [openImageModal, setOpenImageModal] = useState(false);
   let [users, setUsers] = useState([]);
   let [currentUser, setCurrentUser] = useState({ _id: 0 });
   let [allPosts, setAllPosts] = useState([]);
-  let [followers, setFollowers] = useState(0);
-  let [following2, setFollowing2] = useState(0);
+  let [followers, setFollowers] = useState([]);
+  let [following2, setFollowing2] = useState([]);
+  let [userImg, setUserImg] = useState(null);
 
   const loggedInUser = useSelector((state) => state.user.data);
   //console.log('current user: ',currentUser)
+
+  const [, updateState] = React.useState();
+  const forceUpdate = React.useCallback(() => updateState({}), []);
 
   useEffect(() => {
     console.log("the user the we choose is: ", props.match.params.user);
@@ -35,47 +43,53 @@ const ProfileInfo = (props) => {
   //     }
   // }
 
-  useEffect(async()=>{
-    try{
-    let current = await getCurrentUser();
-    console.log("current: ", current[0].username, "\nloggedin: ", loggedInUser.username)
-    if(current[0].username == loggedInUser.username){
-      setMe(true)
-    } else {
-      setMe(false)
+  useEffect(async () => {
+    try {
+      let current = await getCurrentUser();
+      console.log(
+        "current: ",
+        current[0].username,
+        "\nloggedin: ",
+        loggedInUser.username
+      );
+      if (current[0].username == loggedInUser.username) {
+        setMe(true);
+      } else {
+        setMe(false);
+      }
+
+      //console.log("loggedInUser.following: ", loggedInUser.following)
+      if (followers.includes(loggedInUser._id)) {
+        setFollowing(true);
+        console.log("following");
+      } else {
+        setFollowing(false);
+        console.log("!following: ", followers, ".......", loggedInUser._id);
+      }
+      // if(loggedInUser.following.includes(current[0]._id)){
+      //   console.log('following2: ', loggedInUser.following, 'currentUser: ', current[0]._id)
+      //   setFollowing(true)
+      // } else {
+      //   setFollowing(false)
+      //   console.log('ELSE:following2: ', loggedInUser.following, 'currentUser: ', current[0]._id)
+      // }
+    } catch (err) {
+      console.log(err);
     }
-    
-    
-    //console.log("loggedInUser.following: ", loggedInUser.following)
-    if(followers.includes(loggedInUser._id)){
-      setFollowing(true);
-      console.log('following')
-    } else {
-      setFollowing(false);
-      console.log('!following: ', followers, ".......", loggedInUser._id)
-    }
-    // if(loggedInUser.following.includes(current[0]._id)){
-    //   console.log('following2: ', loggedInUser.following, 'currentUser: ', current[0]._id)
-    //   setFollowing(true)
-    // } else {
-    //   setFollowing(false)
-    //   console.log('ELSE:following2: ', loggedInUser.following, 'currentUser: ', current[0]._id)
-    // }
-  } catch(err){
-    console.log(err)
-  }
-  })
+  });
 
   useEffect(() => getCurrentUser(), [users]);
 
   useEffect(async () => {
-    setCurrentUser(getCurrentUser);
+    let current = getCurrentUser();
+    //console.log(`<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n${current}`)
+    setCurrentUser(current);
   }, [props.match.params.user]);
 
   const getUsers = async () => {
     const response = await backend({ url: "/users/" });
 
-    console.log("users: ", response.data);
+    //console.log("users: ", response.data);
     setUsers(response.data);
   };
 
@@ -83,20 +97,35 @@ const ProfileInfo = (props) => {
     let result = users.filter(
       (user) => user.username == props.match.params.user
     );
-    console.log("filtered result: ", result[0]);
+    //console.log("filtered result: ", result[0]);
     setCurrentUser(result[0]);
     return result;
   };
 
-  const follow = async() => {
-    const response = await backend({ url: `/users/follow/${currentUser._id}`,method:"post", data:currentUser });
-    setFollowing(true)
-    console.log(response.data);
+  const follow = async () => {
+    const response = await backend({
+      url: `/users/follow/${currentUser._id}`,
+      method: "post",
+      data: currentUser,
+    });
+    setFollowing(true);
+    console.log("✅✅✅",followers);
+    forceUpdate();
+  };
+
+  const unfollow = async() => {
+    const response = await backend({
+      url: `/users/unfollow/${currentUser._id}`,
+      method: "delete"
+    });
+    setFollowing(false);
+    console.log('❌❌❌',response.data);
   }
 
-  useEffect(()=>{
-    getCurrentUser();
-  }, [following])
+  useEffect(async() => {
+    let current = await getCurrentUser();
+    setCurrentUser(current);
+  }, [following]);
 
   useEffect(async () => {
     try {
@@ -115,24 +144,33 @@ const ProfileInfo = (props) => {
     setAllPosts(allPosts.data);
   };
 
+  function updateUserIMG(e) {
+    setUserImg(e.target.files[0])
+  }
+
   return (
     <Container className="container">
       {currentUser && (
         <Row>
           <Col xs={11} md={3}>
-            <img
-              src={currentUser && currentUser.image}
-              className="profile-img"
-            />
+          {me ? <img
+            src={currentUser && currentUser.image}
+            className="profile-img"
+            onClick={()=>setOpenImageModal(true)} user={currentUser}
+          /> : 
+          <img
+            src={currentUser && currentUser.image}
+            className="profile-img"
+          />
+        }
           </Col>
           <Col xs={11} md={8} mt-4>
             <Row className="firstRow">
               <p className="username">{currentUser && currentUser.username}</p>
               {me && (
                 <>
-                  <button className="editProfie-btn">
-                    <strong>Edit Profile</strong>
-                  </button>
+                  <EditProfile showModal={openModal} className="editProfie-btn" onClick={()=>setOpenModal(true)} user={currentUser}/>
+                  <EditPicture showModal={openImageModal} />
                   <IoIosSettings className="settings-btn" />
                 </>
               )}
@@ -140,7 +178,7 @@ const ProfileInfo = (props) => {
                 ? !me && (
                     <div className="following-btns">
                       <button className="message-btn">Message</button>
-                      <button className="following">
+                      <button className="following" onClick={unfollow}>
                         <FaUserCheck />
                       </button>
                       <button className="sugested">
@@ -151,7 +189,9 @@ const ProfileInfo = (props) => {
                   )
                 : !me && (
                     <div className="follow-btns">
-                      <button className="follow-btn" onClick={follow}>Follow</button>
+                      <button className="follow-btn" onClick={follow}>
+                        Follow
+                      </button>
                       <button className="more">
                         <IoMdArrowDropdown />
                       </button>

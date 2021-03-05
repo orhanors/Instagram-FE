@@ -6,11 +6,15 @@ import { addComment } from "../../api/comments";
 import { Modal } from "../postModal/Modal";
 import PostLoader from "../../loaders/PostLoader";
 import { useSelector } from "react-redux";
+
+import Comments from "../comments/comments";
+
 import Likes from "../likes/Likes";
 
 export default function Posts() {
 	const [showModal, setShowModal] = useState(false);
 	const [content, setContent] = useState("");
+
 	//const [comment, setComment] = useState("");
 	const [loading, setLoading] = useState(true);
 	const [showComments, setShowComments] = useState(false);
@@ -138,19 +142,31 @@ export default function Posts() {
 								</svg>
 							</div>
 							{post?.comments?.length > 0 && (
-								<span>
-									<p onClick={openModal}>
-										View all {post?.comments?.length}{" "}
-										comments
-									</p>
-									<Modal
-										showModal={showModal}
-										setShowModal={setShowModal}
-										allposts={post}
-									/>
-								</span>
+
+								<>
+									<span>
+										<div
+											onClick={openModal}
+											className='ml-3 view-comments'
+											style={{
+												fontSize: "15px",
+												color: "gray",
+											}}>
+											View all {post?.comments?.length}{" "}
+											comments
+										</div>
+										<Modal
+											showModal={showModal}
+											setShowModal={setShowModal}
+											data={post}
+										/>
+									</span>
+									<Comments comment={post.comments}/>
+								</>
+
 							)}
-							<div className='footer d-flex align-items-center justify-content-between px-3 pb-2'>
+
+							<div className='footer d-flex align-items-center justify-content-between px-3  py-1 border-top'>
 								<div className='d-flex align-items-center'>
 									<svg
 										aria-label='Emoji'
