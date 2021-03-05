@@ -10,6 +10,7 @@ import Comments from "../comments/comments";
 export default function Posts() {
 	const [showModal, setShowModal] = useState(false);
 	const [content, setContent] = useState("");
+
 	//const [comment, setComment] = useState("");
 	const [loading, setLoading] = useState(true);
 	const [showComments, setShowComments] = useState(false);
@@ -135,7 +136,13 @@ export default function Posts() {
 							{post?.comments?.length > 0 && (
 								<>
 									<span>
-										<p onClick={openModal}>
+										<p
+											onClick={openModal}
+											className='ml-2 view-comments'
+											style={{
+												fontSize: "12px",
+												color: "gray",
+											}}>
 											View all {post?.comments?.length}{" "}
 											comments
 										</p>
