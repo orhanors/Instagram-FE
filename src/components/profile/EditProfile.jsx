@@ -13,6 +13,7 @@ const EditProfile = (props) => {
   let [name, setName] = useState(props.user.name);
   let [surname, setSurname] = useState(props.user.surname);
   let [email, setEmail] = useState(props.user.email);
+  let [password, setPassword] = useState(props.user.password);
   let history = useHistory();
 
   let user = {
@@ -58,9 +59,9 @@ const EditProfile = (props) => {
     {console.log("/////////////////////////////////", props.user, "///////////////////////////////////////")}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Update info</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{"margin": "0 auto"}}>
             <p>Username</p>
             <input value={username} onChange={(e) => setUsername(e.currentTarget.value)}></input>
             <p>Name</p>
@@ -69,8 +70,6 @@ const EditProfile = (props) => {
             <input value={surname} onChange={(e) => setSurname(e.currentTarget.value)}></input>
             <p>Email</p>
             <input value={email} onChange={(e) => setEmail(e.currentTarget.value)}></input>
-            <p>Change profile picture</p>
-            <input type='file' id='user-image' onChange={(e) => updateUserIMG(e)} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
