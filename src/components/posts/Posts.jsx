@@ -136,27 +136,27 @@ export default function Posts() {
 							{post?.comments?.length > 0 && (
 								<>
 									<span>
-										<p
+										<div
 											onClick={openModal}
-											className='ml-2 view-comments'
+											className='ml-3 view-comments'
 											style={{
-												fontSize: "12px",
+												fontSize: "15px",
 												color: "gray",
 											}}>
 											View all {post?.comments?.length}{" "}
 											comments
-										</p>
+										</div>
 										<Modal
 											showModal={showModal}
 											setShowModal={setShowModal}
 											data={post}
 										/>
 									</span>
-									<Comments comment={post.comments} />
+									<Comments comment={post.comments}/>
 								</>
 							)}
 
-							<div className='footer d-flex align-items-center justify-content-between px-3 pb-2'>
+							<div className='footer d-flex align-items-center justify-content-between px-3  py-1 border-top'>
 								<div className='d-flex align-items-center'>
 									<svg
 										aria-label='Emoji'

@@ -90,7 +90,7 @@ export const Modal = ({ showModal, setShowModal, data }) => {
           <animated.div style={animation}>
             <ModalWrapper showModal={showModal}>
               <div className="d-flex" style={{ width: "100%", height: "100%", position: "relative" }}>
-                <img className="myFPostImg" src={data.image} />
+                <img className="myFPostImg" src={data?.image} />
                 <div style={{ width: "40%" }}>
                   <div
                     className="d-flex flex-column"
@@ -106,7 +106,7 @@ export const Modal = ({ showModal, setShowModal, data }) => {
                           className="myFProfileImg mr-3"
                         />
                         <div>
-                          <strong>{data.user.username}</strong>
+                          <strong>{data?.user?.username}</strong>
                         </div>
                       </div>
                       <div className=" p-3" id="scroll-comment">
@@ -117,14 +117,14 @@ export const Modal = ({ showModal, setShowModal, data }) => {
                                 <div>
                                   <div className="d-flex align-items-center">
                                     <img
-                                      src={data.user.image}
+                                      src={data?.user?.image}
                                       className="myFProfileImg mr-3"
                                     />
                                     <div className="d-flex flex-column mt-2">
                                       <div className="d-flex">
-                                        <strong>{comment.user.username}</strong>
+                                        <strong>{comment?.user?.username}</strong>
                                         <span className="comment-content ml-1">
-                                          {comment.content}
+                                          {comment?.content}
                                         </span>
                                       </div>
                                       <div className="d-flex mt-2">
@@ -203,7 +203,7 @@ export const Modal = ({ showModal, setShowModal, data }) => {
                         </div>
                         <div className="d-flex flex-column my-1">
                           <small className="num-of-likes mb-1">
-                            <strong>{data.likes.length} likes</strong>
+                            <strong>{data?.likes?.length} likes</strong>
                           </small>
                           <small className="day-ago">5 days ago</small>
                         </div>
