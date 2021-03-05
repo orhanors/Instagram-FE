@@ -24,19 +24,19 @@ const PostCart = ({ img, post }) => {
   return (
     <Col className="cart" xs={12} md={6} lg={4} onClick={openModal} >
       <img src={img} id="myImg" />
-      <Modal showModal={showModal} setShowModal={setShowModal} />
+      <Modal showModal={showModal} setShowModal={setShowModal} data={post}/>
       <span className="overlay-icons" style={{ margin: "0 auto" }}>
         {
           post.comments.length > 0 && 
           (<>
-            <AiFillHeart className="heart-outline" /> 
+            <FaComment className="play ml-4" />
             {post.comments.length}
           </>)
         }
         {
           post.likes.length > 0 && 
           (<>
-            <FaComment className="play ml-4" />
+            <AiFillHeart className="heart-outline" /> 
             {post.likes.length}
           </>)
         }
