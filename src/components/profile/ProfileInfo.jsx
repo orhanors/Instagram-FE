@@ -8,7 +8,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { HiDotsHorizontal } from "react-icons/hi";
 import backend from "../../helpers/client";
 import { withRouter } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import EditProfile from "./EditProfile";
 
 const ProfileInfo = (props) => {
@@ -18,12 +18,15 @@ const ProfileInfo = (props) => {
   let [users, setUsers] = useState([]);
   let [currentUser, setCurrentUser] = useState({ _id: 0 });
   let [allPosts, setAllPosts] = useState([]);
-  let [followers, setFollowers] = useState(0);
-  let [following2, setFollowing2] = useState(0);
+  let [followers, setFollowers] = useState([]);
+  let [following2, setFollowing2] = useState([]);
   let [userImg, setUserImg] = useState(null);
 
   const loggedInUser = useSelector((state) => state.user.data);
   //console.log('current user: ',currentUser)
+
+  const [, updateState] = React.useState();
+  const forceUpdate = React.useCallback(() => updateState({}), []);
 
   useEffect(() => {
     console.log("the user the we choose is: ", props.match.params.user);
@@ -77,14 +80,14 @@ const ProfileInfo = (props) => {
 
   useEffect(async () => {
     let current = getCurrentUser();
-    console.log(`<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n${current}`)
+    //console.log(`<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n${current}`)
     setCurrentUser(current);
   }, [props.match.params.user]);
 
   const getUsers = async () => {
     const response = await backend({ url: "/users/" });
 
-    console.log("users: ", response.data);
+    //console.log("users: ", response.data);
     setUsers(response.data);
   };
 
@@ -92,7 +95,7 @@ const ProfileInfo = (props) => {
     let result = users.filter(
       (user) => user.username == props.match.params.user
     );
-    console.log("filtered result: ", result[0]);
+    //console.log("filtered result: ", result[0]);
     setCurrentUser(result[0]);
     return result;
   };
@@ -104,7 +107,8 @@ const ProfileInfo = (props) => {
       data: currentUser,
     });
     setFollowing(true);
-    console.log(response.data);
+    console.log("✅✅✅",followers);
+    forceUpdate();
   };
 
   const unfollow = async() => {
@@ -112,12 +116,12 @@ const ProfileInfo = (props) => {
       url: `/users/unfollow/${currentUser._id}`,
       method: "delete"
     });
-    setFollowing(true);
-    console.log(response.data);
+    setFollowing(false);
+    console.log('❌❌❌',response.data);
   }
 
-  useEffect(() => {
-    let current = getCurrentUser();
+  useEffect(async() => {
+    let current = await getCurrentUser();
     setCurrentUser(current);
   }, [following]);
 
