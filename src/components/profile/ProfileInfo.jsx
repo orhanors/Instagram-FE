@@ -25,76 +25,85 @@ const ProfileInfo = (props) => {
 	let [userImg, setUserImg] = useState(null);
 
 	const loggedInUser = useSelector((state) => state.user.data);
-	//console.log('current user: ',currentUser)
+	console.log("current user: ", currentUser);
 
 	const [, updateState] = React.useState();
 	const forceUpdate = React.useCallback(() => updateState({}), []);
 
+	useEffect(() => getCurrentUser(), []);
 	useEffect(() => {
 		console.log("the user the we choose is: ", props.match.params.user);
 		getUsers();
 	}, []);
 
-	//   function user() {
-	//     if(currentUser[0]._id) {
-	//       getUsersPosts(currentUser[0]._id)
-	//     } else {
-	//       user();
-	//     }
-	// }
-
-	useEffect(async () => {
-		try {
-			let current = await getCurrentUser();
-			console.log(
-				"current: ",
-				current[0].username,
-				"\nloggedin: ",
-				loggedInUser.username
-			);
-			if (current[0].username == loggedInUser.username) {
-				setMe(true);
-			} else {
-				setMe(false);
-			}
-
-			//console.log("loggedInUser.following: ", loggedInUser.following)
-			if (followers.includes(loggedInUser._id)) {
-				setFollowing(true);
-				console.log("following");
-			} else {
-				setFollowing(false);
-				console.log(
-					"!following: ",
-					followers,
-					".......",
-					loggedInUser._id
-				);
-			}
-			// if(loggedInUser.following.includes(current[0]._id)){
-			//   console.log('following2: ', loggedInUser.following, 'currentUser: ', current[0]._id)
-			//   setFollowing(true)
-			// } else {
-			//   setFollowing(false)
-			//   console.log('ELSE:following2: ', loggedInUser.following, 'currentUser: ', current[0]._id)
-			// }
-		} catch (err) {
-			console.log(err);
+	function user() {
+		if (currentUser[0]._id) {
+			getUsersPosts(currentUser[0]._id);
+		} else {
+			user();
 		}
-	});
+	}
 
-	useEffect(() => getCurrentUser(), [users]);
+	// useEffect(async () => {
+	// 	try {
+	// 		let current = await getCurrentUser();
+	// 		console.log(
+	// 			"current: ",
+	// 			current[0].username,
+	// 			"\nloggedin: ",
+	// 			loggedInUser.username
+	// 		);
+	// 		if (current[0].username == loggedInUser.username) {
+	// 			setMe(true);
+	// 		} else {
+	// 			setMe(false);
+	// 		}
+
+	// 		console.log("loggedInUser.following: ", loggedInUser.following);
+	// 		if (followers.includes(loggedInUser._id)) {
+	// 			setFollowing(true);
+	// 			console.log("following");
+	// 		} else {
+	// 			setFollowing(false);
+	// 			console.log(
+	// 				"!following: ",
+	// 				followers,
+	// 				".......",
+	// 				loggedInUser._id
+	// 			);
+	// 		}
+	// 		if (loggedInUser.following.includes(current[0]._id)) {
+	// 			console.log(
+	// 				"following2: ",
+	// 				loggedInUser.following,
+	// 				"currentUser: ",
+	// 				current[0]._id
+	// 			);
+	// 			setFollowing(true);
+	// 		} else {
+	// 			setFollowing(false);
+	// 			console.log(
+	// 				"ELSE:following2: ",
+	// 				loggedInUser.following,
+	// 				"currentUser: ",
+	// 				current[0]._id
+	// 			);
+	// 		}
+	// 	} catch (err) {
+	// 		console.log(err);
+	// 	}
+	// });
 
 	useEffect(async () => {
 		let current = getCurrentUser();
-		//console.log(`<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n${current}`)
+		console.log(`<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n${current}`);
 		setCurrentUser(current);
 	}, [props.match.params.user]);
 
 	const getUsers = async () => {
 		const response = await backend({ url: "/users/" });
 
-		//console.log("users: ", response.data);
+		console.log("users: ", response.data);
 		setUsers(response.data);
 	};
 
@@ -102,7 +111,7 @@ const ProfileInfo = (props) => {
 		let result = users.filter(
 			(user) => user.username == props.match.params.user
 		);
-		//console.log("filtered result: ", result[0]);
+		console.log("filtered result: ", result[0]);
 		setCurrentUser(result[0]);
 		return result;
 	};
