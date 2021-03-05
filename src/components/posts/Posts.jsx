@@ -11,8 +11,11 @@ import Comments from "../comments/comments";
 import PostHeaderButton from "../post-header-button/PostHeaderButton";
 
 import Likes from "../likes/Likes";
+import Singlepost from "../showpost/Singlepost";
+import { useHistory } from "react-router-dom";
 
 export default function Posts() {
+	const history = useHistory();
 	const [showModal, setShowModal] = useState(false);
 	const [content, setContent] = useState("");
 	const [showPostHeaderButton, setShowPosHeaderButton] = useState(false);
@@ -26,10 +29,7 @@ export default function Posts() {
 	const [showRedHeart, setShowRedHeart] = useState(false);
 	const { refresh } = useSelector((state) => state);
 	const { data } = useSelector((state) => state.user);
-	const openModal = () => {
-		//setShowModal((prev) => !prev);
-		setShowModal(true);
-	};
+
 	const addNewComment = async (postId) => {
 		try {
 			const res = await addComment(postId, content);
@@ -37,12 +37,12 @@ export default function Posts() {
 			console.log(myarray.length);
 			if (res) {
 				setShowComments(!showComments);
+				setContent("");
 			}
 		} catch (error) {
 			console.log(error);
 		}
 	};
-
 	const [allposts, setAllPosts] = useState([]);
 	useEffect(async () => {
 		// let changeLike=allposts.map((post)=> post.likes.map((like)=>like))
@@ -180,7 +180,9 @@ export default function Posts() {
 								<>
 									<span>
 										<div
-											onClick={openModal}
+											onClick={() =>
+												history.push(`/p/${post._id}`)
+											}
 											className='ml-3 view-comments'
 											style={{
 												fontSize: "15px",
@@ -189,11 +191,7 @@ export default function Posts() {
 											View all {post?.comments?.length}{" "}
 											comments
 										</div>
-										<Modal
-											showModal={showModal}
-											setShowModal={setShowModal}
-											data={post}
-										/>
+										<Singlepost />
 									</span>
 									<Comments comment={post.comments} />
 								</>
@@ -214,6 +212,7 @@ export default function Posts() {
 									<FormControl
 										placeholder='Add a comment'
 										className='comment'
+										value={content}
 										onChange={(e) =>
 											setContent(e.target.value)
 										}
