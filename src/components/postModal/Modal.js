@@ -30,7 +30,7 @@ const ModalWrapper = styled.div`
   z-index: 10;
   border-radius: 0px;
   z-index: 100;
-  
+  transition: 0.5s;
 `;
 
 const ModalContent = styled.div`
@@ -113,7 +113,7 @@ export const Modal = ({ showModal, setShowModal, data }) => {
                         {data &&
                           data?.comments?.map((comment) => {
                             return (
-                              <div className="user-info d-flex align-items-center justify-content-between p-1 mb-4">
+                              <div className="user-info d-flex align-items-center justify-content-between mb-4">
                                 <div>
                                   <div className="d-flex align-items-center">
                                     <img
@@ -203,7 +203,7 @@ export const Modal = ({ showModal, setShowModal, data }) => {
                         </div>
                         <div className="d-flex flex-column my-1">
                           <small className="num-of-likes mb-1">
-                            <strong>{data.likes.length} likes</strong>
+                            <strong>{data?.likes?.length} likes</strong>
                           </small>
                           <small className="day-ago">5 days ago</small>
                         </div>

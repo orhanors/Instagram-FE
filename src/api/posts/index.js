@@ -36,5 +36,8 @@ export const getNewsFeedPosts = async () => {
 
 export const getPost = async(postId)=>{
     const response = await backend({url:`/posts/${postId}`})
-    return await response.data
+    return await response.data}
+export const likeordis = async(postId)=>{
+    const response = await backend({url:`/posts/${postId}/like`,method:"post"})
+    return await response
 }
