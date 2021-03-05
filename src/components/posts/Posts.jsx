@@ -8,12 +8,17 @@ import PostLoader from "../../loaders/PostLoader";
 import { useSelector } from "react-redux";
 
 import Comments from "../comments/comments";
+import PostHeaderButton from "../post-header-button/PostHeaderButton";
 
 import Likes from "../likes/Likes";
 
 export default function Posts() {
   const [showModal, setShowModal] = useState(false);
   const [content, setContent] = useState("");
+  const [showPostHeaderButton, setShowPosHeaderButton] = useState(false);
+
+  const handleClosePostHeaderButton = () => setShowPosHeaderButton(false);
+  const handleShowPostHeaderButton = () => setShowPosHeaderButton(true);
 
   //const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(true);
@@ -56,8 +61,8 @@ export default function Posts() {
         {allposts?.map((post, key) => {
           return (
             <div className="container-post mb-5" key={key}>
-              <div className="d-flex justify-content-between align-items-center mx-3 my-2">
-                <div className="header d-flex ">
+              <div className=" header d-flex justify-content-between align-items-center mx-3 my-2">
+                <div className=" d-flex ">
                   <img
                     className="post-header-img mr-3"
                     src={post?.user?.image}
@@ -68,7 +73,7 @@ export default function Posts() {
                     <small>Bramall Lane</small>
                   </div>
                 </div>
-                <button className="d-flex justify-content-center align-center">
+                <button className="d-flex justify-content-center align-center" onClick={handleShowPostHeaderButton}>
                   <svg
                     aria-label="More options"
                     class="_8-yf5 "
@@ -101,6 +106,12 @@ export default function Posts() {
                   </svg>
                 </button>
               </div>
+                <PostHeaderButton 
+                showPostHeaderButton={showPostHeaderButton} 
+                setShowPosHeaderButton={setShowPosHeaderButton}
+                handleClosePostHeaderButton={handleClosePostHeaderButton}
+                handleShowPostHeaderButton={handleShowPostHeaderButton}
+                />
               <img className="post-img" src={post.image} alt="" />
 
               <div className="d-flex justify-content-between px-3 py-3">

@@ -30,7 +30,7 @@ const ModalWrapper = styled.div`
   z-index: 10;
   border-radius: 0px;
   z-index: 100;
-  
+  transition: 0.5s;
 `;
 
 const ModalContent = styled.div`
