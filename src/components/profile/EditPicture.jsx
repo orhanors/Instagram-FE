@@ -5,18 +5,18 @@ import backend from "../../helpers/client";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { setRefreshTrue } from "../../store/refresh";
+import { getUserProfile } from "../../store/user";
 
 function EditPicture(props) {
-	const dispatch = useDispatch();
 	const { refresh } = useSelector((state) => state);
 	const [show, setShow] = useState(true);
 	const [file, setFile] = useState();
 	const [input, setInput] = useState();
-
+	const dispatch = useDispatch();
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
-    //useEffect((e) => handleFile(e), [])
+	//useEffect((e) => handleFile(e), [])
 
 	const handleFile = (e) => {
 		const formData = new FormData();
@@ -36,7 +36,7 @@ function EditPicture(props) {
 			console.log(response, "responnssssss");
 			if (response.status == 201) {
 				setShow(false);
-				dispatch(setRefreshTrue(!refresh));
+				dispatch(getUserProfile());
 			}
 		} catch (error) {
 			console.log("handle upl img err: ", error);
