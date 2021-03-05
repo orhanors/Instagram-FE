@@ -130,32 +130,34 @@ export const Modal = ({ showModal, setShowModal,data }) => {
         <Background ref={modalRef}>
           <animated.div style={animation}>
             <ModalWrapper showModal={showModal}>
-              <Row>
-                <Col xs={8}>
-                  <ModalImg src={data.image} alt="camera" />
+              <div className='d-flex'>
+                <Col xs={8} style={{padding: "0"}}>
+                  <ModalImg src={data.image} alt="camera"/>
                 </Col>
                 <Col xs={4}>
                   <ModalContent>
                     <>
-                      <div className="user-info">
-                        <img src="http://placehold.it/100x100" />
+                      <div>
+                        <div className="user-info">
+                          <img src="http://placehold.it/100x100" />
+                          <p>
+                            <strong>{data.user.username}</strong>
+                          </p>
+                        
+                        </div>
+                        {data.description &&
+                        <div className="user-info">
+                        <img src={data.user.image} />
+                        
                         <p>
                           <strong>{data.user.username}</strong>
+                          <span className="comment-content">{data.description}</span>
+                          
                         </p>
-                      
+                        <hr />
                       </div>
-                      {data.description &&
-                       <div className="user-info ml-5">
-                       <img src={data.user.image} />
-                       
-                       <p>
-                         <strong>{data.user.username}</strong>
-                         <span className="comment-content">{data.description}</span>
-                        
-                       </p>
-                       <hr />
-                     </div>
-                      }
+                        }
+                      </div>
                       
                      
                       <div className="display-comment">
@@ -262,7 +264,7 @@ export const Modal = ({ showModal, setShowModal,data }) => {
                   </ModalContent>
                   <CloseModalButton aria-label="Close modal" onClick={closeModal}/>
                 </Col>
-              </Row>
+              </div>
             </ModalWrapper>
           </animated.div>
         </Background>
@@ -270,3 +272,6 @@ export const Modal = ({ showModal, setShowModal,data }) => {
     </>
   );
 };
+
+
+
