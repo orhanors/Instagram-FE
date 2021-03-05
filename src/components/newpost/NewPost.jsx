@@ -18,10 +18,10 @@ function NewPost(props) {
 
 	const handleFile = (e) => {
 		const formData = new FormData();
-		formData.append("image", e.target.files[0]);
+		formData.append("post", e.target.files[0]);
 
 		setFile(formData);
-		setInput(URL.createObjectURL(e.target.files[0]))
+		setInput(URL.createObjectURL(e.target.files[0]));
 	};
 
 	const handleUpload = async (e) => {
@@ -31,7 +31,7 @@ function NewPost(props) {
 				method: "post",
 				data: file,
 			});
-			console.log(file)
+			console.log(file);
 			console.log(response, "responnssssss");
 			if (response.status === 200) {
 				setShow(false);
