@@ -10,11 +10,13 @@ import backend from "../../helpers/client";
 import { withRouter } from "react-router-dom";
 import { useEffect, useCallback } from "react";
 import EditProfile from "./EditProfile";
+import EditPicture from "./EditPicture";
 
 const ProfileInfo = (props) => {
   let [me, setMe] = useState(false);
   let [following, setFollowing] = useState(false);
   let [openModal, setOpenModal] = useState(false);
+  let [openImageModal, setOpenImageModal] = useState(false);
   let [users, setUsers] = useState([]);
   let [currentUser, setCurrentUser] = useState({ _id: 0 });
   let [allPosts, setAllPosts] = useState([]);
@@ -151,10 +153,16 @@ const ProfileInfo = (props) => {
       {currentUser && (
         <Row>
           <Col xs={11} md={3}>
+          {me ? <img
+            src={currentUser && currentUser.image}
+            className="profile-img"
+            onClick={()=>setOpenImageModal(true)} user={currentUser}
+          /> : 
           <img
             src={currentUser && currentUser.image}
             className="profile-img"
           />
+        }
           </Col>
           <Col xs={11} md={8} mt-4>
             <Row className="firstRow">
@@ -162,6 +170,7 @@ const ProfileInfo = (props) => {
               {me && (
                 <>
                   <EditProfile showModal={openModal} className="editProfie-btn" onClick={()=>setOpenModal(true)} user={currentUser}/>
+                  <EditPicture showModal={openImageModal} />
                   <IoIosSettings className="settings-btn" />
                 </>
               )}
