@@ -5,9 +5,15 @@ import { TiDeleteOutline } from "react-icons/ti";
 import "./comments.scss";
 function Comments({ comment }) {
 	return (
+
+		//true ? ( 1==2 ? (console.log()) : (console.log())) : (console.log())
+
 		<div className='comment-container'>
 			<>
-				{comment.length < 1 ? (
+				{comment.length===0 &&
+					<div></div>
+				}
+				{comment.length < 2 ? (
 					<div className='user-info'>
 						<img src={comment[0]?.user.image} />
 

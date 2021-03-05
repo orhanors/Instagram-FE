@@ -1,24 +1,24 @@
-// .post-modal-img{
-//     width: 100%;
-//     height: 100%;
-// }
 
-// // .post-modal-container{
-// //     width: fit-content;
-// // }
+.myCloseButton{
+    position: absolute !important;
+    color: rgb(255, 255, 255) !important;
+    top: -100px;
+    right: -50px;
+    font-size:1.8rem;
+    cursor: pointer;
+}
 
-// // .post-modal-body{
-// //     width: fit-content;
-// // }
+.myFProfileImg{
+    width: 2.5rem;
+    border-radius: 50%;
+}
+.myFPostImg{
+    width:60%;
+    height:100%;
+}
 
-// .modal-content{
-//     width: fit-content;
-// }
+#scroll-comment{
+    height: 350px;
+    overflow-y: scroll;
+}
 
-// #post-modal-img{
-//     border-radius: 3px;
-// }
-
-// .post-modal-body{
-//     padding:0;
-// }
