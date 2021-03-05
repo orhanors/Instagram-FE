@@ -38,6 +38,8 @@ function Likes({ myid, mypostId }) {
       {poz ? (
         <svg
         onClick={() => addOrRemoveLike(mypostId)}
+        style={{marginRight: "1.5rem"}}
+        className='mr-4'
           aria-label="Unlike"
           class="_8-yf5 "
           fill="#ed4956"
@@ -50,6 +52,7 @@ function Likes({ myid, mypostId }) {
       ) : (
         <svg
           onClick={() => addOrRemoveLike(mypostId)}
+          style={{marginRight: "1.5rem"}}
           className="mr-4"
           aria-label="Like"
           fill="#262626"

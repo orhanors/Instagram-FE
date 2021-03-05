@@ -113,7 +113,7 @@ export const Modal = ({ showModal, setShowModal, data }) => {
                         {data &&
                           data.comments.map((comment) => {
                             return (
-                              <div className="user-info d-flex align-items-center justify-content-between p-1 mb-4">
+                              <div className="user-info d-flex align-items-center justify-content-between mb-4">
                                 <div>
                                   <div className="d-flex align-items-center">
                                     <img
