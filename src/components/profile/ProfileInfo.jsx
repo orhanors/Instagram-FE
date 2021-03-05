@@ -7,7 +7,7 @@ import { FaUserCheck } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { HiDotsHorizontal } from "react-icons/hi";
 import backend from "../../helpers/client";
-import { withRouter } from "react-router-dom";
+import { useLocation, withRouter } from "react-router-dom";
 import { useEffect, useCallback } from "react";
 import EditProfile from "./EditProfile";
 import EditPicture from "./EditPicture";

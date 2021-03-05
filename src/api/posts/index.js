@@ -33,3 +33,8 @@ export const getNewsFeedPosts = async () => {
     return await response.data
     
 };
+
+export const getPost = async(postId)=>{
+    const response = await backend({url:`/posts/${postId}`})
+    return await response.data
+}

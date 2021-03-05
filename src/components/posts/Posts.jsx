@@ -3,22 +3,22 @@ import "./posts.scss";
 import { FormControl, Button } from "react-bootstrap";
 import { getNewsFeedPosts } from "../../api/posts";
 import { addComment } from "../../api/comments";
-import { Modal } from "../postModal/Modal";
+import Singlepost from "../showpost/Singlepost"
+
 import PostLoader from "../../loaders/PostLoader";
 import { useSelector } from "react-redux";
 import Comments from "../comments/comments";
+import { useHistory, useLocation } from "react-router-dom";
 export default function Posts() {
-	const [showModal, setShowModal] = useState(false);
+	
 	const [content, setContent] = useState("");
-
+let location =useLocation()
 	//const [comment, setComment] = useState("");
+	const history = useHistory()
 	const [loading, setLoading] = useState(true);
 	const [showComments, setShowComments] = useState(false);
 	const { refresh } = useSelector((state) => state);
-	const openModal = () => {
-		//setShowModal((prev) => !prev);
-		setShowModal(true);
-	};
+	
 	const addNewComment = async (postId) => {
 		try {
 			const res = await addComment(postId, content);
@@ -26,6 +26,7 @@ export default function Posts() {
 			console.log(myarray.length);
 			if (res) {
 				setShowComments(!showComments);
+				setContent("")
 			}
 		} catch (error) {
 			console.log(error);
@@ -37,7 +38,8 @@ export default function Posts() {
 		setLoading(false);
 		setData(res);
 		console.log("-0----", res);
-		console.log(data.length);
+		console.log(location);
+		
 	}, [showComments, refresh]);
 	//const [marginLeft, setMarginLeft] = useState(0);
 	const showContent = (post) => {
@@ -137,7 +139,8 @@ export default function Posts() {
 								<>
 									<span>
 										<p
-											onClick={openModal}
+											onClick={()=>history.push(`/${post._id}`)}
+											// onClick={openModal}
 											className='ml-2 view-comments'
 											style={{
 												fontSize: "12px",
@@ -145,12 +148,14 @@ export default function Posts() {
 											}}>
 											View all {post?.comments?.length}{" "}
 											comments
+										
 										</p>
-										<Modal
-											showModal={showModal}
-											setShowModal={setShowModal}
-											data={post}
+										
+										<Singlepost
+											
 										/>
+										
+										
 									</span>
 									<Comments comment={post.comments} />
 								</>
@@ -171,6 +176,7 @@ export default function Posts() {
 									<FormControl
 										placeholder='Add a comment'
 										className='comment'
+										value={content}
 										onChange={(e) =>
 											setContent(e.target.value)
 										}
