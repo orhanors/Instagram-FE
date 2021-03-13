@@ -115,5 +115,5 @@ And the funniest part is using this ProtectedRouter. What we need to do is just 
 <details>
 <summary><b> DM messaging </b></summary>
 	</br>
-    This is a test feature which is implemented using socket.io-client. You need to talk to me if you want to make a conversation with your follers or following. It's just requires adding starting chat feature to FE. We tested it our test account by creating conversation models in database it works well. This will be the next feature. Stay tuned.
+    This is a test feature which is implemented using socket.io-client. You need to talk to me if you want to make a conversation with your follers or following. It just requires adding starting chat feature to FE. We tested it our test account by creating conversation models in database it works well. This will be the next feature. Stay tuned.
 </details>
