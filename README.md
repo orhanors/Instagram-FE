@@ -1,5 +1,6 @@
 # Instagram Web Clone Frontend implemented using ReactJs and Redux
-Run this project locally 
+
+To run this project locally:
 
 ```bash
   npm i
