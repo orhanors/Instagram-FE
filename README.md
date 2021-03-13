@@ -12,6 +12,7 @@ Run this project locally
 
 <details>
 <summary><b> Redux Store to manage loggedin user info </b></summary>
+	</br>
     <p> Redux store setted up with redux-toolkit and API middleware </p>
     
    <p> Here is the implementation of basic API call. We use redux ducks apporach which suggests to keep all related implemantation in one file instead of 
@@ -35,6 +36,7 @@ Run this project locally
 
 <details>
 <summary><b> Protected Route for rendering routes conditionally </b></summary>
+	</br>
     <p> We're protecting all the routes from not loggedin users. User should login or signup to see homepage and the other pages </p>
     
    <p> Here is the implementation of super powerful Protected Route <p>
@@ -94,10 +96,24 @@ We have this condition to make just one API call. Otherwise this will make API c
 And the funniest part is using this ProtectedRouter. What we need to do is just using ProtectedRouter instead of normal react Route.
 
 ```javascript
-<Route path='/login' exact component={Login} />
-<Route path='/signup' exact component={Signup} />
-<ProtectedRoute path='/' exact component={Home} />
-<ProtectedRoute path='/dm/message' exact component={Message} />
-<ProtectedRoute path='/:user' exact component={Profile} />
-```			
+	<Route path='/login' exact component={Login} />
+	<Route path='/signup' exact component={Signup} />
+	<ProtectedRoute path='/' exact component={Home} />
+	<ProtectedRoute path='/dm/message' exact component={Message} />
+	<ProtectedRoute path='/:user' exact component={Profile} />
+```
+.
+</details>
+
+<details>
+<summary><b> Following-Notification-Posts-Likes </b></summary>
+</br>
+    All these features respond immediately to changes. If you follow user2, you'll see that your following size will be +1 immediately. Same for likes,notification and posts. You don't need to refresh page to see changes. That's why we are using React.  
+</details>
+
+
+<details>
+<summary><b> DM messaging </b></summary>
+	</br>
+    This is a test feature which is implemented using socket.io-client. You need to talk to me if you want to make a conversation with your follers or following. It's just requires adding starting chat feature to FE. We tested it our test account by creating conversation models in database it works well. This will be the next feature. Stay tuned.
 </details>
